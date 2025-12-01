@@ -1,0 +1,16 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npx create-vite@latest . --template react)",
+      "Bash(node --version:*)",
+      "Bash(npm:*)",
+      "Bash(curl:*)",
+      "Bash(bash)",
+      "Bash(~/.bun/bin/bun install:*)",
+      "Bash(~/.bun/bin/bun run dev:*)",
+      "Bash(open http://localhost:5173/)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}
