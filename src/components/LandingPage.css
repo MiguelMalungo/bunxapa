@@ -60,9 +60,16 @@
   text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
 }
 
-.nav-link:hover {
+.nav-link:hover,
+.nav-link:focus {
+  color: #F2C800;
   transform: scale(1.05);
   text-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+}
+
+.nav-link:active,
+.nav-link.active {
+  color: #F2C800;
 }
 
 /* Section 2: Social Media Icons */
