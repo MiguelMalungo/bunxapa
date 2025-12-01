@@ -7,6 +7,7 @@ const LandingPage = () => {
   const [currentTime, setCurrentTime] = useState(0);
   const [duration, setDuration] = useState(0);
   const audioRef = useRef(null);
+  const bottomVideoRef = useRef(null);
 
   const tracks = [
     { title: 'Blop', artist: 'BUNXAPA', file: `${import.meta.env.BASE_URL}Blop.mp3` },
@@ -63,6 +64,48 @@ const LandingPage = () => {
       audio.pause();
     }
   }, [isPlaying, currentTrackIndex]);
+
+  useEffect(() => {
+    const video = bottomVideoRef.current;
+    const container = video?.parentElement;
+    
+    if (video && container) {
+      video.playbackRate = 0.3;
+      
+      const updateContainerHeight = () => {
+        if (video.videoWidth > 0 && video.videoHeight > 0) {
+          const aspectRatio = video.videoHeight / video.videoWidth;
+          const containerWidth = container.offsetWidth || window.innerWidth;
+          const containerHeight = containerWidth * aspectRatio;
+          container.style.height = `${containerHeight}px`;
+        }
+      };
+      
+      const handleLoadedMetadata = () => {
+        video.playbackRate = 0.3;
+        updateContainerHeight();
+      };
+      
+      video.addEventListener('loadedmetadata', handleLoadedMetadata);
+      
+      // Update on window resize
+      const handleResize = () => {
+        updateContainerHeight();
+      };
+      window.addEventListener('resize', handleResize);
+      
+      // Try immediately in case metadata is already loaded
+      if (video.readyState >= 1) {
+        video.playbackRate = 0.3;
+        updateContainerHeight();
+      }
+      
+      return () => {
+        video.removeEventListener('loadedmetadata', handleLoadedMetadata);
+        window.removeEventListener('resize', handleResize);
+      };
+    }
+  }, []);
 
   const formatTime = (seconds) => {
     if (!seconds || isNaN(seconds)) return '0:00';
@@ -221,6 +264,40 @@ const LandingPage = () => {
           </svg>
         </a>
         </div>
+      </div>
+
+      {/* Bottom Section: Text + Video Overlay */}
+      <div className="bottom-section">
+        <h1 className="bottom-text">
+          BUN<span className="x-letter">X</span>APA
+        </h1>
+        <video 
+          ref={bottomVideoRef}
+          className="bottom-video" 
+          autoPlay 
+          loop 
+          muted 
+          playsInline
+          onLoadedMetadata={(e) => {
+            e.target.playbackRate = 0.3;
+          }}
+        >
+          <source src={`${import.meta.env.BASE_URL}bottom.mp4`} type="video/mp4" />
+        </video>
+        
+        {/* Footer */}
+        <footer className="bottom-footer">
+          <div className="footer-content">
+            <div className="footer-right">
+              Created by <span className="footer-author">DIGISOL</span>
+              <img 
+                src={`${import.meta.env.BASE_URL}logodigi.png`} 
+                alt="DIGISOL Logo" 
+                className="footer-logo"
+              />
+            </div>
+          </div>
+        </footer>
       </div>
     </div>
   );

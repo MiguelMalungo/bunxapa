@@ -11,6 +11,8 @@
   overflow-y: auto;
   overflow-x: hidden;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Helvetica', 'Arial', sans-serif;
+  background-color: #000;
+  /* Fallback color */
 }
 
 /* Background Image */
@@ -18,8 +20,7 @@
   position: relative;
   width: 100%;
   height: auto;
-  min-height: 100%;
-  z-index: 0;
+  display: block;
 }
 
 .background-image img {
@@ -114,7 +115,7 @@
 /* Section 3: Tour Dates */
 .tour-dates {
   position: absolute;
-  top: 720px;
+  top: 750px;
   right: 100px;
   padding: 25px 30px;
   border-radius: 25px;
@@ -158,7 +159,7 @@
 .music-player {
   position: absolute;
   bottom: 20px;
-  left: calc(50% - 60px);
+  left: 50%;
   transform: translateX(-50%);
   padding: 20px 30px;
   border-radius: 30px;
@@ -290,80 +291,364 @@
   transform: scale(1.15);
 }
 
-/* Responsive Design */
+/* 
+   Responsive Design:
+   Apply fluid percentage-based positioning and vw units ONLY for screens smaller than 1024px.
+   This ensures the desktop view remains fixed as originally designed, while mobile adapts.
+*/
 @media (max-width: 1024px) {
-  .logo {
-    font-size: 56px;
-    padding: 25px 60px;
+
+  /* Navigation Menu */
+  .nav-menu {
+    top: calc(3.2% + 20px);
+    left: calc(4.0% + 35px);
+    gap: 4.5vw;
+    padding: 1.2% 4.5%;
+    border-radius: 3.4vw;
   }
 
+  .nav-link {
+    font-size: 1.8vw;
+    letter-spacing: 0.11vw;
+  }
+
+  /* Social Icons */
+  .social-icons {
+    right: 3.8%;
+    top: 3.2%;
+    gap: 0.95vw;
+    padding: 0.95vw 0.7vw;
+    border-radius: 1.4vw;
+  }
+
+  .social-icon {
+    width: 1.4vw;
+    height: 1.4vw;
+  }
+
+  .social-icon svg {
+    width: 1.1vw;
+    height: 1.1vw;
+  }
+
+  /* Logo */
+  .logo {
+    bottom: 7.1%;
+    font-size: 9.8vw;
+    letter-spacing: 0.38vw;
+  }
+
+  /* Tour Dates */
+  .tour-dates {
+    top: calc(25.6% + 80px);
+    right: 4.7%;
+    padding: 0.9% 1.4%;
+    border-radius: 1.2vw;
+    min-width: 9.5vw;
+  }
+
+  .tour-dates-title {
+    font-size: 1.5vw;
+    letter-spacing: 0.1vw;
+    margin-bottom: 0.7%;
+  }
+
+  .tour-date-item {
+    margin-bottom: 0.7%;
+  }
+
+  .date {
+    font-size: 0.95vw;
+    margin-bottom: 0.2%;
+  }
+
+  .venue {
+    font-size: 0.66vw;
+  }
+
+  /* Music Player */
   .music-player {
-    min-width: 500px;
+    bottom: 0.7%;
+    padding: 0.7% 1.4%;
+    border-radius: 1.4vw;
+    width: 40%;
+    min-width: unset;
+  }
+
+  .track-info {
+    margin-bottom: 0.5%;
+  }
+
+  .track-title {
+    font-size: 0.85vw;
+    margin-bottom: 0.2%;
+  }
+
+  .artist-name {
+    font-size: 0.66vw;
+  }
+
+  .progress-bar {
+    gap: 0.7vw;
+    margin-bottom: 0.5%;
+  }
+
+  .time {
+    font-size: 0.6vw;
+    min-width: 2.4vw;
+  }
+
+  .progress {
+    height: 0.2vw;
+    border-radius: 0.1vw;
+  }
+
+  .progress-filled {
+    border-radius: 0.1vw;
+  }
+
+  .control-buttons {
+    gap: 1.4vw;
+  }
+
+  .control-btn svg {
+    width: 1.3vw;
+    height: 1.3vw;
+  }
+
+  .play-btn svg {
+    width: 1.9vw;
+    height: 1.9vw;
+  }
+
+  /* Action Icons */
+  .action-icons {
+    left: 3.3%;
+    bottom: 0.7%;
+    gap: 1.2%;
+    padding: 1.2% 1.2%;
+    border-radius: 2.3vw;
+  }
+
+  .action-icon {
+    width: 2.6vw;
+    height: 2.6vw;
+  }
+
+  .action-icon svg {
+    width: 2.1vw;
+    height: 2.1vw;
   }
 }
 
 @media (max-width: 768px) {
-  .nav-menu {
-    gap: 20px;
-    padding: 12px 25px;
-    font-size: 14px;
+
+  /* Additional tweaks for very small screens if needed, inheriting the fluid base */
+  .nav-link {
+    font-size: 2.5vw;
   }
 
-  .logo {
-    font-size: 42px;
-    padding: 20px 40px;
+  .social-icon {
+    width: 4vw;
+    height: 4vw;
   }
 
-  .social-icons {
-    left: 20px;
-    padding: 15px 10px;
-    gap: 15px;
+  .social-icon svg {
+    width: 3vw;
+    height: 3vw;
   }
 
-  .tour-dates {
-    right: 20px;
-    padding: 20px 25px;
+  .action-icon {
+    width: 6vw;
+    height: 6vw;
   }
 
-  .action-icons {
-    right: 20px;
-    padding: 20px 15px;
-    gap: 20px;
+  .action-icon svg {
+    width: 4.5vw;
+    height: 4.5vw;
   }
 
   .music-player {
-    min-width: 90%;
-    padding: 20px 25px;
+    width: 80%;
   }
-}
 
-@media (max-width: 480px) {
-  .nav-menu {
+  .track-title {
+    font-size: 2.5vw;
+  }
+
+  .artist-name {
+    font-size: 2vw;
+  }
+
+  .time {
+    font-size: 2vw;
+  }
+
+  .control-btn svg {
+    width: 4vw;
+    height: 4vw;
+  }
+
+  .play-btn svg {
+    width: 6vw;
+    height: 6vw;
+  }
+
+  .tour-dates-title {
+    font-size: 3vw;
+  }
+
+  .date {
+    font-size: 2.5vw;
+  }
+
+  .venue {
+    font-size: 2vw;
+  }
+
+  /* Footer mobile styles */
+  .bottom-footer {
+    padding: 8px 15px;
+    transform: scaleY(0.9);
+    transform-origin: bottom;
+  }
+
+  .footer-content {
+    flex-direction: column;
     gap: 15px;
-    padding: 10px 20px;
+    align-items: center;
+    text-align: center;
   }
 
-  .nav-link {
-    font-size: 12px;
+  .footer-left {
+    flex-direction: column;
+    gap: 10px;
+    align-items: center;
   }
 
-  .logo {
-    font-size: 32px;
-    padding: 15px 30px;
-  }
-
-  .tour-dates {
-    top: auto;
-    bottom: 200px;
-    right: 20px;
-    font-size: 12px;
-  }
-
-  .action-icons {
+  .footer-separator {
     display: none;
   }
 
-  .social-icons {
-    left: 10px;
+  .footer-right {
+    justify-content: center;
   }
+}
+
+/* Bottom Section */
+.bottom-section {
+  position: relative;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  overflow: hidden;
+  background-color: #000;
+  min-height: 100px;
+  padding: 5% 0 0 0;
+}
+
+.bottom-text {
+  font-family: 'Inter', sans-serif;
+  font-weight: 900;
+  font-size: calc(18vw + 10px);
+  /* Large responsive size */
+  color: white;
+  text-align: center;
+  margin: 0;
+  padding: 0;
+  z-index: 2;
+  width: 100%;
+  line-height: 0.8;
+  letter-spacing: -0.04em;
+  text-transform: uppercase;
+  mix-blend-mode: overlay;
+}
+
+.x-letter {
+  color: #F2C800;
+}
+
+.bottom-video {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 1;
+  pointer-events: none;
+}
+
+/* Footer */
+.bottom-footer {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  padding: 40px 40px;
+  z-index: 3;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+@media (min-width: 769px) {
+  .bottom-footer {
+    padding: 40px 40px;
+  }
+  
+  .bottom-text {
+    font-size: calc(18vw + 20px);
+  }
+}
+
+.footer-content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  max-width: 1200px;
+  margin: 0 auto;
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 14px;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Helvetica', 'Arial', sans-serif;
+}
+
+.footer-left {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.footer-link {
+  color: rgba(255, 255, 255, 0.9);
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.footer-link:hover {
+  color: white;
+}
+
+.footer-separator {
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.footer-right {
+  display: flex;
+  align-items: center;
+}
+
+.footer-author {
+  font-weight: 600;
+  color: #F2C800;
+  margin-left: 5px;
+}
+
+.footer-logo {
+  height: 20px;
+  width: auto;
+  margin-left: 10px;
+  object-fit: contain;
 }
