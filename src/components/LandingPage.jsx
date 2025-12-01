@@ -9,9 +9,9 @@ const LandingPage = () => {
   const audioRef = useRef(null);
 
   const tracks = [
-    { title: 'Blop', artist: 'BUNXAPA', file: '/Blop.mp3' },
-    { title: 'Release', artist: 'BUNXAPA', file: '/Release.mp3' },
-    { title: 'Closing', artist: 'BUNXAPA', file: '/Closing.mp3' }
+    { title: 'Blop', artist: 'BUNXAPA', file: `${import.meta.env.BASE_URL}Blop.mp3` },
+    { title: 'Release', artist: 'BUNXAPA', file: `${import.meta.env.BASE_URL}Release.mp3` },
+    { title: 'Closing', artist: 'BUNXAPA', file: `${import.meta.env.BASE_URL}Closing.mp3` }
   ];
 
   const currentTrack = tracks[currentTrackIndex];
@@ -78,7 +78,7 @@ const LandingPage = () => {
     <div className="landing-page">
       {/* Background Image Container */}
       <div className="background-image">
-        <img src="/artwork.png" alt="BUNXAPA Artwork" />
+        <img src={`${import.meta.env.BASE_URL}artwork.png`} alt="BUNXAPA Artwork" />
 
         {/* Section 1: Navigation Menu - Top */}
         <nav className="nav-menu">
