@@ -315,9 +315,43 @@
 
 @media (max-width: 768px) {
 
+  /* Fill entire mobile viewport */
+  .landing-page {
+    min-height: 100vh;
+    min-height: 100dvh; /* Dynamic viewport height - excludes browser UI */
+    overflow-y: auto;
+    overflow-x: hidden;
+  }
+
+  .background-image {
+    min-height: 100vh;
+    min-height: 100dvh;
+    height: auto;
+  }
+
+  .background-image img {
+    width: 100%;
+    min-height: 100vh;
+    min-height: 100dvh;
+    object-fit: cover;
+    object-position: center;
+  }
+
+  /* Use mobile background image */
+  .background-image img {
+    content: url('/bunxapa/artworkM.png');
+  }
+
   /* Additional tweaks for very small screens if needed, inheriting the fluid base */
   .nav-link {
-    font-size: 2.5vw;
+    font-size: 4.25vw; /* 70% bigger: 2.5vw * 1.7 = 4.25vw */
+  }
+
+  .nav-menu {
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 2.04% 7.65%; /* 70% bigger padding */
+    gap: 7.65vw; /* 70% bigger gap */
   }
 
   .social-icon {
@@ -338,6 +372,40 @@
   .action-icon svg {
     width: 4.5vw;
     height: 4.5vw;
+  }
+
+  /* Hide tour dates on mobile */
+  .tour-dates {
+    display: none;
+  }
+
+  /* Hide left action icons bar on mobile */
+  .action-icons {
+    display: none;
+  }
+
+  /* Reposition social media icons to horizontal centered bottom on mobile */
+  .social-icons {
+    position: absolute;
+    bottom: 10px; /* Half padding to bottom */
+    left: 50%;
+    transform: translateX(-50%);
+    right: auto;
+    top: auto;
+    flex-direction: row;
+    gap: 30px;
+    padding: 7.5px 15px; /* Half padding: 15px/2 = 7.5px, 30px/2 = 15px */
+    border-radius: 50px;
+  }
+
+  .social-icon {
+    width: 40px;
+    height: 40px;
+  }
+
+  .social-icon svg {
+    width: 30px;
+    height: 30px;
   }
 
   .background-image .music-player:not(.mobile-only) {
