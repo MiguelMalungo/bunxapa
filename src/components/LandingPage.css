@@ -165,100 +165,14 @@
 /* Section 4: Music Player */
 .music-player {
   position: absolute;
-  bottom: 20px;
-  left: 50%;
-  transform: translateX(-50%);
-  padding: 20px 30px;
-  border-radius: 30px;
-  min-width: 600px;
+  bottom: 30px;
+  right: 45px;
+  left: auto;
+  transform: none;
   z-index: 10;
-}
-
-.track-info {
-  margin-bottom: 15px;
-}
-
-.track-title {
-  font-size: 18px;
-  font-weight: 600;
-  color: white;
-  margin-bottom: 5px;
-  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
-}
-
-.artist-name {
-  font-size: 14px;
-  color: rgba(255, 255, 255, 0.9);
-  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
-}
-
-.player-controls {
-  width: 100%;
-}
-
-.progress-bar {
-  display: flex;
-  align-items: center;
-  gap: 15px;
-  margin-bottom: 15px;
-}
-
-.time {
-  font-size: 13px;
-  color: white;
-  font-weight: 500;
-  min-width: 50px;
-  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
-}
-
-.progress {
-  flex: 1;
-  height: 4px;
-  background: rgba(255, 255, 255, 0.3);
-  border-radius: 2px;
-  position: relative;
-  overflow: hidden;
-}
-
-.progress-filled {
-  height: 100%;
-  background: white;
-  border-radius: 2px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-}
-
-.control-buttons {
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 30px;
-}
-
-.control-btn {
-  background: none;
-  border: none;
-  color: white;
-  cursor: pointer;
-  padding: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: all 0.3s ease;
-}
-
-.control-btn svg {
-  width: 28px;
-  height: 28px;
-  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
-}
-
-.play-btn svg {
-  width: 40px;
-  height: 40px;
-}
-
-.control-btn:hover {
-  transform: scale(1.1);
 }
 
 /* Section 5: Action Icons */
@@ -376,56 +290,7 @@
   /* Music Player */
   .music-player {
     bottom: 0.7%;
-    padding: 0.7% 1.4%;
-    border-radius: 1.4vw;
     width: 40%;
-    min-width: unset;
-  }
-
-  .track-info {
-    margin-bottom: 0.5%;
-  }
-
-  .track-title {
-    font-size: 0.85vw;
-    margin-bottom: 0.2%;
-  }
-
-  .artist-name {
-    font-size: 0.66vw;
-  }
-
-  .progress-bar {
-    gap: 0.7vw;
-    margin-bottom: 0.5%;
-  }
-
-  .time {
-    font-size: 0.6vw;
-    min-width: 2.4vw;
-  }
-
-  .progress {
-    height: 0.2vw;
-    border-radius: 0.1vw;
-  }
-
-  .progress-filled {
-    border-radius: 0.1vw;
-  }
-
-  .control-buttons {
-    gap: 1.4vw;
-  }
-
-  .control-btn svg {
-    width: 1.3vw;
-    height: 1.3vw;
-  }
-
-  .play-btn svg {
-    width: 1.9vw;
-    height: 1.9vw;
   }
 
   /* Action Icons */
@@ -475,30 +340,44 @@
     height: 4.5vw;
   }
 
-  .music-player {
-    width: 80%;
+  .background-image .music-player:not(.mobile-only) {
+    display: none;
   }
-
-  .track-title {
-    font-size: 2.5vw;
+  
+  .bottom-section {
+    position: relative;
   }
-
-  .artist-name {
-    font-size: 2vw;
+  
+  .bottom-text {
+    position: relative;
   }
-
-  .time {
-    font-size: 2vw;
+  
+  .bottom-section .music-player.mobile-only {
+    position: absolute;
+    width: 90%;
+    max-width: 384px;
+    top: calc(5% + calc(18vw + 10px) * 0.8 + 40px);
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: auto;
+    padding-bottom: 0;
+    z-index: 4;
   }
-
-  .control-btn svg {
-    width: 4vw;
-    height: 4vw;
+  
+  @media (min-width: 769px) {
+    .music-player.mobile-only {
+      display: none !important;
+    }
+    
+    .background-image .music-player:not(.mobile-only) {
+      display: block;
+    }
   }
-
-  .play-btn svg {
-    width: 6vw;
-    height: 6vw;
+  
+  @media (max-width: 768px) {
+    .background-image .music-player:not(.mobile-only) {
+      display: none;
+    }
   }
 
   .tour-dates-title {

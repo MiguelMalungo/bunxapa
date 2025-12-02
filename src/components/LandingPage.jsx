@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import './LandingPage.css';
+import { LiquidGlassPlayer } from './LiquidGlassPlayer';
 
 const LandingPage = () => {
   const [isPlaying, setIsPlaying] = useState(false);
@@ -107,16 +108,6 @@ const LandingPage = () => {
     }
   }, []);
 
-  const formatTime = (seconds) => {
-    if (!seconds || isNaN(seconds)) return '0:00';
-    const mins = Math.floor(seconds / 60);
-    const secs = Math.floor(seconds % 60);
-    return `${mins}:${secs.toString().padStart(2, '0')}`;
-  };
-
-  const progressPercent = duration ? (currentTime / duration) * 100 : 0;
-  const remainingTime = duration - currentTime;
-
   return (
     <div className="landing-page">
       {/* Background Image Container */}
@@ -203,42 +194,21 @@ const LandingPage = () => {
         {/* Section 4: Music Player - Bottom */}
         <div className="music-player">
           <audio ref={audioRef} src={currentTrack.file} />
-          <div className="track-info">
-            <div className="track-title">{currentTrack.title}</div>
-            <div className="artist-name">{currentTrack.artist}</div>
-          </div>
-          <div className="player-controls">
-            <div className="progress-bar">
-              <div className="time">{formatTime(currentTime)}</div>
-              <div className="progress">
-                <div className="progress-filled" style={{width: `${progressPercent}%`}}></div>
-              </div>
-              <div className="time">-{formatTime(remainingTime)}</div>
-            </div>
-            <div className="control-buttons">
-              <button className="control-btn" onClick={prevTrack}>
-                <svg viewBox="0 0 24 24" fill="currentColor">
-                  <path d="M6 6h2v12H6zm3.5 6l8.5 6V6z"/>
-                </svg>
-              </button>
-              <button className="control-btn play-btn" onClick={togglePlay}>
-                {isPlaying ? (
-                  <svg viewBox="0 0 24 24" fill="currentColor">
-                    <path d="M6 4h4v16H6zm8 0h4v16h-4z"/>
-                  </svg>
-                ) : (
-                  <svg viewBox="0 0 24 24" fill="currentColor">
-                    <path d="M8 5v14l11-7z"/>
-                  </svg>
-                )}
-              </button>
-              <button className="control-btn" onClick={nextTrack}>
-                <svg viewBox="0 0 24 24" fill="currentColor">
-                  <path d="M6 18l8.5-6L6 6v12zM16 6v12h2V6h-2z"/>
-                </svg>
-              </button>
-            </div>
-          </div>
+          <LiquidGlassPlayer
+            currentTrack={currentTrack}
+            isPlaying={isPlaying}
+            currentTime={currentTime}
+            duration={duration}
+            onPlayPause={togglePlay}
+            onNext={nextTrack}
+            onPrev={prevTrack}
+            onSeek={(newTime) => {
+              if (audioRef.current) {
+                audioRef.current.currentTime = newTime;
+                setCurrentTime(newTime);
+              }
+            }}
+          />
         </div>
 
         {/* Section 2: Social Media Icons - Right Fixed */}
@@ -271,6 +241,25 @@ const LandingPage = () => {
         <h1 className="bottom-text">
           BUN<span className="x-letter">X</span>APA
         </h1>
+        {/* Section 4: Music Player - Below BUNXAPA (Mobile Only) */}
+        <div className="music-player mobile-only">
+          <audio ref={audioRef} src={currentTrack.file} />
+          <LiquidGlassPlayer
+            currentTrack={currentTrack}
+            isPlaying={isPlaying}
+            currentTime={currentTime}
+            duration={duration}
+            onPlayPause={togglePlay}
+            onNext={nextTrack}
+            onPrev={prevTrack}
+            onSeek={(newTime) => {
+              if (audioRef.current) {
+                audioRef.current.currentTime = newTime;
+                setCurrentTime(newTime);
+              }
+            }}
+          />
+        </div>
         <video 
           ref={bottomVideoRef}
           className="bottom-video" 
