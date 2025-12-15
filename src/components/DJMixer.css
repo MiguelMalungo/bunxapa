@@ -11,7 +11,7 @@
 /* Deck styling */
 .deck {
   flex: 1;
-  max-width: 226px;
+  max-width: 183px;
   background: rgba(255, 255, 255, 0.08);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
@@ -125,7 +125,7 @@
 
 .vinyl-label {
   position: absolute;
-  font-size: 14px;
+  font-size: 77px;
   font-weight: bold;
   color: rgba(255, 255, 255, 0.3);
   z-index: 1;

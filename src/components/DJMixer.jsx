@@ -145,7 +145,7 @@ const DJMixer = ({ tracks }) => {
 
         {/* Vinyl/Waveform display */}
         <div className={`vinyl ${isPlaying ? 'spinning' : ''}`}>
-          <div className="vinyl-label">{track.title.substring(0, 2).toUpperCase()}</div>
+          <div className="vinyl-label">X</div>
         </div>
 
         {/* Progress bar */}
