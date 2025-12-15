@@ -8,7 +8,13 @@
       "Bash(bash)",
       "Bash(~/.bun/bin/bun install:*)",
       "Bash(~/.bun/bin/bun run dev:*)",
-      "Bash(open http://localhost:5173/)"
+      "Bash(open http://localhost:5173/)",
+      "Bash(brew list:*)",
+      "Bash(brew install:*)",
+      "Bash(git add:*)",
+      "Bash(git commit:*)",
+      "Bash(git push:*)",
+      "Bash(npx gh-pages:*)"
     ],
     "deny": [],
     "ask": []

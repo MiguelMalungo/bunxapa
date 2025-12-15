@@ -13,8 +13,6 @@ const LandingPage = () => {
   const tracks = [
     { title: 'Blop', artist: 'BUNXAPA', file: `${import.meta.env.BASE_URL}Blop.mp3` },
     { title: 'Release', artist: 'BUNXAPA', file: `${import.meta.env.BASE_URL}Release.mp3` },
-    { title: 'Closing', artist: 'BUNXAPA', file: `${import.meta.env.BASE_URL}Closing.mp3` },
-    { title: 'Fadi', artist: 'BUNXAPA', file: `${import.meta.env.BASE_URL}Fadi.mp3` },
     { title: 'Echoes Extend', artist: 'BUNXAPA', file: `${import.meta.env.BASE_URL}EchoesExtend.mp3` },
     { title: 'Horizon', artist: 'BUNXAPA', file: `${import.meta.env.BASE_URL}Horizon1.mp3` },
     { title: 'Melanchoholic', artist: 'BUNXAPA', file: `${import.meta.env.BASE_URL}Melanchoholic.mp3` },
