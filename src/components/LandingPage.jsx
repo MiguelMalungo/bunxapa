@@ -1,13 +1,8 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useRef, useEffect } from 'react';
 import './LandingPage.css';
-import { LiquidGlassPlayer } from './LiquidGlassPlayer';
+import DJMixer from './DJMixer';
 
 const LandingPage = () => {
-  const [isPlaying, setIsPlaying] = useState(false);
-  const [currentTrackIndex, setCurrentTrackIndex] = useState(0);
-  const [currentTime, setCurrentTime] = useState(0);
-  const [duration, setDuration] = useState(0);
-  const audioRef = useRef(null);
   const bottomVideoRef = useRef(null);
 
   const tracks = [
@@ -19,56 +14,6 @@ const LandingPage = () => {
     { title: 'Blop', artist: 'BUNXAPA', file: `${import.meta.env.BASE_URL}Blop.mp3` },
     { title: 'Release', artist: 'BUNXAPA', file: `${import.meta.env.BASE_URL}Release.mp3` }
   ];
-
-  const currentTrack = tracks[currentTrackIndex];
-
-  const nextTrack = () => {
-    setCurrentTrackIndex((prev) => (prev + 1) % tracks.length);
-    setIsPlaying(true);
-  };
-
-  const prevTrack = () => {
-    setCurrentTrackIndex((prev) => (prev - 1 + tracks.length) % tracks.length);
-    setIsPlaying(true);
-  };
-
-  const togglePlay = () => {
-    setIsPlaying(!isPlaying);
-  };
-
-  useEffect(() => {
-    const audio = audioRef.current;
-    if (!audio) return;
-
-    const updateTime = () => setCurrentTime(audio.currentTime);
-    const updateDuration = () => setDuration(audio.duration);
-    const handleEnded = () => {
-      setIsPlaying(false);
-      setCurrentTrackIndex((prev) => (prev + 1) % tracks.length);
-      setIsPlaying(true);
-    };
-
-    audio.addEventListener('timeupdate', updateTime);
-    audio.addEventListener('loadedmetadata', updateDuration);
-    audio.addEventListener('ended', handleEnded);
-
-    return () => {
-      audio.removeEventListener('timeupdate', updateTime);
-      audio.removeEventListener('loadedmetadata', updateDuration);
-      audio.removeEventListener('ended', handleEnded);
-    };
-  }, [currentTrackIndex, tracks.length]);
-
-  useEffect(() => {
-    const audio = audioRef.current;
-    if (!audio) return;
-
-    if (isPlaying) {
-      audio.play();
-    } else {
-      audio.pause();
-    }
-  }, [isPlaying, currentTrackIndex]);
 
   useEffect(() => {
     const video = bottomVideoRef.current;
@@ -195,24 +140,9 @@ const LandingPage = () => {
           </div>
         </div>
 
-        {/* Section 4: Music Player - Bottom */}
-        <div className="music-player">
-          <audio ref={audioRef} src={currentTrack.file} />
-          <LiquidGlassPlayer
-            currentTrack={currentTrack}
-            isPlaying={isPlaying}
-            currentTime={currentTime}
-            duration={duration}
-            onPlayPause={togglePlay}
-            onNext={nextTrack}
-            onPrev={prevTrack}
-            onSeek={(newTime) => {
-              if (audioRef.current) {
-                audioRef.current.currentTime = newTime;
-                setCurrentTime(newTime);
-              }
-            }}
-          />
+        {/* Section 4: DJ Mixer - Bottom */}
+        <div className="music-player dj-mixer-container">
+          <DJMixer tracks={tracks} />
         </div>
 
         {/* Section 2: Social Media Icons - Right Fixed */}
@@ -245,24 +175,9 @@ const LandingPage = () => {
         <h1 className="bottom-text">
           BUN<span className="x-letter">X</span>APA
         </h1>
-        {/* Section 4: Music Player - Below BUNXAPA (Mobile Only) */}
-        <div className="music-player mobile-only">
-          <audio ref={audioRef} src={currentTrack.file} />
-          <LiquidGlassPlayer
-            currentTrack={currentTrack}
-            isPlaying={isPlaying}
-            currentTime={currentTime}
-            duration={duration}
-            onPlayPause={togglePlay}
-            onNext={nextTrack}
-            onPrev={prevTrack}
-            onSeek={(newTime) => {
-              if (audioRef.current) {
-                audioRef.current.currentTime = newTime;
-                setCurrentTime(newTime);
-              }
-            }}
-          />
+        {/* Section 4: DJ Mixer - Below BUNXAPA (Mobile Only) */}
+        <div className="music-player mobile-only dj-mixer-container">
+          <DJMixer tracks={tracks} />
         </div>
         <video 
           ref={bottomVideoRef}

@@ -162,7 +162,7 @@
   text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
 }
 
-/* Section 4: Music Player */
+/* Section 4: Music Player / DJ Mixer */
 .music-player {
   position: absolute;
   bottom: 30px;
@@ -173,6 +173,13 @@
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.dj-mixer-container {
+  right: auto;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: 20px;
 }
 
 /* Section 5: Action Icons */
@@ -354,14 +361,18 @@
   
   .bottom-section .music-player.mobile-only {
     position: absolute;
-    width: 90%;
-    max-width: 384px;
+    width: 95%;
+    max-width: 100%;
     top: calc(5% + calc(18vw + 10px) * 0.8 + 40px);
     left: 50%;
     transform: translateX(-50%);
     bottom: auto;
     padding-bottom: 0;
     z-index: 4;
+  }
+
+  .bottom-section .music-player.mobile-only.dj-mixer-container {
+    top: calc(5% + calc(18vw + 10px) * 0.8 + 20px);
   }
   
   @media (min-width: 769px) {
