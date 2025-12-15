@@ -23,32 +23,46 @@ const DJMixer = ({ tracks }) => {
 
   // Calculate effective volumes based on crossfader
   const getEffectiveVolume = (deckVolume, isDeckA) => {
-    const crossfadeMultiplier = isDeckA
-      ? Math.cos(crossfader * Math.PI / 2)
-      : Math.sin(crossfader * Math.PI / 2);
-    return deckVolume * crossfadeMultiplier;
+    let crossfadeMultiplier;
+    if (isDeckA) {
+      // Deck A: full volume at 0, muted at 1
+      crossfadeMultiplier = 1 - crossfader;
+    } else {
+      // Deck B: muted at 0, full volume at 1
+      crossfadeMultiplier = crossfader;
+    }
+    const effectiveVolume = deckVolume * crossfadeMultiplier;
+    // Ensure we set to exactly 0 when muted (important for mobile)
+    return effectiveVolume < 0.001 ? 0 : effectiveVolume;
   };
 
   // Update audio volumes when crossfader or deck volumes change
+  // Combined into single effect to avoid timing issues on mobile
   useEffect(() => {
     if (audioRefA.current) {
-      audioRefA.current.volume = getEffectiveVolume(deckAVolume, true);
+      const volume = getEffectiveVolume(deckAVolume, true);
+      audioRefA.current.volume = volume;
     }
-  }, [crossfader, deckAVolume]);
-
-  useEffect(() => {
     if (audioRefB.current) {
-      audioRefB.current.volume = getEffectiveVolume(deckBVolume, false);
+      const volume = getEffectiveVolume(deckBVolume, false);
+      audioRefB.current.volume = volume;
     }
-  }, [crossfader, deckBVolume]);
+  }, [crossfader, deckAVolume, deckBVolume]);
 
   // Deck A audio handlers
   useEffect(() => {
     const audio = audioRefA.current;
     if (!audio) return;
 
+    // Set initial volume
+    audio.volume = getEffectiveVolume(deckAVolume, true);
+
     const updateTime = () => setDeckATime(audio.currentTime);
-    const updateDuration = () => setDeckADuration(audio.duration);
+    const updateDuration = () => {
+      setDeckADuration(audio.duration);
+      // Ensure volume is set after metadata loads (important for mobile)
+      audio.volume = getEffectiveVolume(deckAVolume, true);
+    };
     const handleEnded = () => setDeckAPlaying(false);
 
     audio.addEventListener('timeupdate', updateTime);
@@ -60,15 +74,22 @@ const DJMixer = ({ tracks }) => {
       audio.removeEventListener('loadedmetadata', updateDuration);
       audio.removeEventListener('ended', handleEnded);
     };
-  }, [deckATrackIndex]);
+  }, [deckATrackIndex, crossfader, deckAVolume]);
 
   // Deck B audio handlers
   useEffect(() => {
     const audio = audioRefB.current;
     if (!audio) return;
 
+    // Set initial volume
+    audio.volume = getEffectiveVolume(deckBVolume, false);
+
     const updateTime = () => setDeckBTime(audio.currentTime);
-    const updateDuration = () => setDeckBDuration(audio.duration);
+    const updateDuration = () => {
+      setDeckBDuration(audio.duration);
+      // Ensure volume is set after metadata loads (important for mobile)
+      audio.volume = getEffectiveVolume(deckBVolume, false);
+    };
     const handleEnded = () => setDeckBPlaying(false);
 
     audio.addEventListener('timeupdate', updateTime);
@@ -80,7 +101,7 @@ const DJMixer = ({ tracks }) => {
       audio.removeEventListener('loadedmetadata', updateDuration);
       audio.removeEventListener('ended', handleEnded);
     };
-  }, [deckBTrackIndex]);
+  }, [deckBTrackIndex, crossfader, deckBVolume]);
 
   // Play/pause handlers
   useEffect(() => {

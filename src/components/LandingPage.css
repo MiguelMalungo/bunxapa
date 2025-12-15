@@ -186,7 +186,7 @@
 .action-icons {
   position: absolute;
   left: 70px;
-  bottom: 20px;
+  bottom: 60px;
   display: flex;
   flex-direction: column;
   gap: 35px;
@@ -335,6 +335,10 @@
   .social-icon svg {
     width: 3vw;
     height: 3vw;
+  }
+
+  .action-icons {
+    bottom: calc(0.7% + 40px);
   }
 
   .action-icon {
