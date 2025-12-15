@@ -372,7 +372,11 @@
   }
 
   .bottom-section .music-player.mobile-only.dj-mixer-container {
-    top: calc(5% + calc(18vw + 10px) * 0.8 + 20px);
+    top: 5%;
+  }
+  
+  .bottom-text {
+    display: none;
   }
   
   @media (min-width: 769px) {

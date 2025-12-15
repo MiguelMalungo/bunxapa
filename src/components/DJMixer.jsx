@@ -145,7 +145,10 @@ const DJMixer = ({ tracks }) => {
 
         {/* Vinyl/Waveform display */}
         <div className={`vinyl ${isPlaying ? 'spinning' : ''}`}>
-          <div className="vinyl-label">X</div>
+          <div className="vinyl-label">
+            <span className="vinyl-label-desktop">X</span>
+            <span className="vinyl-label-mobile">X</span>
+          </div>
         </div>
 
         {/* Progress bar */}
