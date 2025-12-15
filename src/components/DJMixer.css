@@ -2,25 +2,25 @@
   display: flex;
   justify-content: center;
   align-items: stretch;
-  gap: 15px;
-  padding: 20px;
-  max-width: 900px;
+  gap: 8px;
+  padding: 5px;
+  max-width: 726px;
   margin: 0 auto;
 }
 
 /* Deck styling */
 .deck {
   flex: 1;
-  max-width: 280px;
+  max-width: 226px;
   background: rgba(255, 255, 255, 0.08);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
   border-radius: 20px;
   border: 1px solid rgba(255, 255, 255, 0.15);
-  padding: 15px;
+  padding: 10px;
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 8px;
   box-shadow:
     0 8px 32px rgba(0, 0, 0, 0.3),
     inset 0 1px 0 rgba(255, 255, 255, 0.1);
@@ -34,16 +34,16 @@
   font-size: 18px;
   font-weight: 700;
   color: #fff;
-  text-shadow: 0 0 10px rgba(242, 200, 0, 0.5);
+  text-shadow: 0 0 10px rgba(0, 200, 100, 0.5);
   letter-spacing: 2px;
 }
 
 .deck-a .deck-label {
-  color: #F2C800;
+  color: #00C864;
 }
 
 .deck-b .deck-label {
-  color: #00C8F2;
+  color: #F23030;
 }
 
 /* Track selector */
@@ -62,7 +62,7 @@
 
 .track-selector select:hover,
 .track-selector select:focus {
-  border-color: rgba(242, 200, 0, 0.5);
+  border-color: rgba(0, 200, 100, 0.5);
   background: rgba(0, 0, 0, 0.5);
 }
 
@@ -74,9 +74,9 @@
 
 /* Vinyl display */
 .vinyl {
-  width: 120px;
-  height: 120px;
-  margin: 10px auto;
+  width: 100px;
+  height: 100px;
+  margin: 8px auto;
   background: linear-gradient(135deg, #1a1a1a 0%, #333 50%, #1a1a1a 100%);
   border-radius: 50%;
   display: flex;
@@ -148,13 +148,13 @@
 
 .progress-fill {
   height: 100%;
-  background: linear-gradient(90deg, #F2C800, #ffdd44);
+  background: linear-gradient(90deg, #00C864, #44ff88);
   border-radius: 4px;
   transition: width 0.1s linear;
 }
 
 .deck-b .progress-fill {
-  background: linear-gradient(90deg, #00C8F2, #44ddff);
+  background: linear-gradient(90deg, #F23030, #ff5555);
 }
 
 .time-display {
@@ -169,12 +169,47 @@
 .deck-controls {
   display: flex;
   justify-content: center;
-  gap: 10px;
+  gap: 8px;
+}
+
+.control-btn {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: #fff;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+}
+
+.control-btn svg {
+  width: 18px;
+  height: 18px;
+}
+
+.control-btn:hover {
+  background: rgba(255, 255, 255, 0.15);
+  border-color: rgba(255, 255, 255, 0.3);
+  transform: scale(1.05);
+}
+
+.deck-a .control-btn:hover {
+  background: rgba(0, 200, 100, 0.15);
+  border-color: #00C864;
+}
+
+.deck-b .control-btn:hover {
+  background: rgba(242, 48, 48, 0.15);
+  border-color: #F23030;
 }
 
 .play-btn {
-  width: 50px;
-  height: 50px;
+  width: 44px;
+  height: 44px;
   border-radius: 50%;
   background: rgba(255, 255, 255, 0.1);
   border: 2px solid rgba(255, 255, 255, 0.2);
@@ -187,31 +222,31 @@
 }
 
 .play-btn svg {
-  width: 24px;
-  height: 24px;
+  width: 22px;
+  height: 22px;
 }
 
 .play-btn:hover {
-  background: rgba(242, 200, 0, 0.2);
-  border-color: #F2C800;
+  background: rgba(0, 200, 100, 0.2);
+  border-color: #00C864;
   transform: scale(1.05);
 }
 
 .play-btn.playing {
-  background: rgba(242, 200, 0, 0.3);
-  border-color: #F2C800;
-  box-shadow: 0 0 20px rgba(242, 200, 0, 0.3);
+  background: rgba(0, 200, 100, 0.3);
+  border-color: #00C864;
+  box-shadow: 0 0 20px rgba(0, 200, 100, 0.3);
 }
 
 .deck-b .play-btn:hover {
-  background: rgba(0, 200, 242, 0.2);
-  border-color: #00C8F2;
+  background: rgba(242, 48, 48, 0.2);
+  border-color: #F23030;
 }
 
 .deck-b .play-btn.playing {
-  background: rgba(0, 200, 242, 0.3);
-  border-color: #00C8F2;
-  box-shadow: 0 0 20px rgba(0, 200, 242, 0.3);
+  background: rgba(242, 48, 48, 0.3);
+  border-color: #F23030;
+  box-shadow: 0 0 20px rgba(242, 48, 48, 0.3);
 }
 
 /* Volume control */
@@ -262,17 +297,17 @@
 
 /* Mixer center */
 .mixer-center {
-  width: 120px;
+  width: 100px;
   background: rgba(255, 255, 255, 0.06);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
   border-radius: 20px;
   border: 1px solid rgba(255, 255, 255, 0.12);
-  padding: 15px 10px;
+  padding: 12px 8px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 20px;
+  gap: 15px;
   box-shadow:
     0 8px 32px rgba(0, 0, 0, 0.3),
     inset 0 1px 0 rgba(255, 255, 255, 0.08);
@@ -301,10 +336,10 @@
 }
 
 .sync-btn:hover {
-  background: rgba(242, 200, 0, 0.3);
-  border-color: #F2C800;
-  color: #F2C800;
-  box-shadow: 0 0 15px rgba(242, 200, 0, 0.3);
+  background: rgba(0, 200, 100, 0.3);
+  border-color: #00C864;
+  color: #00C864;
+  box-shadow: 0 0 15px rgba(0, 200, 100, 0.3);
 }
 
 .sync-btn:active {
@@ -331,7 +366,7 @@
   -webkit-appearance: none;
   appearance: none;
   height: 8px;
-  background: linear-gradient(90deg, #F2C800 0%, rgba(255,255,255,0.2) 50%, #00C8F2 100%);
+  background: linear-gradient(90deg, #00C864 0%, rgba(255,255,255,0.2) 50%, #F23030 100%);
   border-radius: 4px;
   cursor: pointer;
 }
@@ -366,12 +401,12 @@
 }
 
 .mix-a {
-  background: #F2C800;
+  background: #00C864;
   transition: width 0.1s ease;
 }
 
 .mix-b {
-  background: #00C8F2;
+  background: #F23030;
   transition: width 0.1s ease;
 }
 

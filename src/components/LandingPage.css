@@ -176,9 +176,9 @@
 }
 
 .dj-mixer-container {
-  right: auto;
-  left: 50%;
-  transform: translateX(-50%);
+  right: 22px;
+  left: auto;
+  transform: none;
   bottom: 20px;
 }
 

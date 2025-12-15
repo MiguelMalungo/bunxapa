@@ -103,13 +103,11 @@ const DJMixer = ({ tracks }) => {
     }
   }, [deckBPlaying, deckBTrackIndex]);
 
-  // Sync function - sync Deck B to Deck A's position
-  const handleSync = () => {
-    if (audioRefA.current && audioRefB.current && deckADuration > 0 && deckBDuration > 0) {
-      // Calculate relative position and apply to deck B
-      const relativePosition = deckATime / deckADuration;
-      audioRefB.current.currentTime = relativePosition * deckBDuration;
-      setDeckBTime(audioRefB.current.currentTime);
+  // Restart track function
+  const restartTrack = (audioRef, setTime) => {
+    if (audioRef.current) {
+      audioRef.current.currentTime = 0;
+      setTime(0);
     }
   };
 
@@ -120,7 +118,7 @@ const DJMixer = ({ tracks }) => {
     return `${minutes}:${seconds.toString().padStart(2, '0')}`;
   };
 
-  const renderDeck = (deckName, trackIndex, setTrackIndex, isPlaying, setIsPlaying, currentTime, duration, volume, setVolume, audioRef, isDeckA) => {
+  const renderDeck = (deckName, trackIndex, setTrackIndex, isPlaying, setIsPlaying, currentTime, setCurrentTime, duration, volume, setVolume, audioRef) => {
     const track = tracks[trackIndex];
     const progress = duration > 0 ? (currentTime / duration) * 100 : 0;
 
@@ -172,6 +170,18 @@ const DJMixer = ({ tracks }) => {
 
         {/* Controls */}
         <div className="deck-controls">
+          {/* Restart button */}
+          <button
+            className="control-btn restart-btn"
+            onClick={() => restartTrack(audioRef, setCurrentTime)}
+            title="Restart track"
+          >
+            <svg viewBox="0 0 24 24" fill="currentColor">
+              <path d="M6 6h2v12H6zm3.5 6l8.5 6V6z" />
+            </svg>
+          </button>
+
+          {/* Play/Pause button */}
           <button
             className={`play-btn ${isPlaying ? 'playing' : ''}`}
             onClick={() => setIsPlaying(!isPlaying)}
@@ -212,18 +222,13 @@ const DJMixer = ({ tracks }) => {
   return (
     <div className="dj-mixer">
       {/* Deck A */}
-      {renderDeck('A', deckATrackIndex, setDeckATrackIndex, deckAPlaying, setDeckAPlaying, deckATime, deckADuration, deckAVolume, setDeckAVolume, audioRefA, true)}
+      {renderDeck('A', deckATrackIndex, setDeckATrackIndex, deckAPlaying, setDeckAPlaying, deckATime, setDeckATime, deckADuration, deckAVolume, setDeckAVolume, audioRefA)}
 
       {/* Mixer Center */}
       <div className="mixer-center">
         <div className="mixer-header">
           <span>MIXER</span>
         </div>
-
-        {/* Sync button */}
-        <button className="sync-btn" onClick={handleSync}>
-          SYNC
-        </button>
 
         {/* Crossfader */}
         <div className="crossfader-container">
@@ -250,7 +255,7 @@ const DJMixer = ({ tracks }) => {
       </div>
 
       {/* Deck B */}
-      {renderDeck('B', deckBTrackIndex, setDeckBTrackIndex, deckBPlaying, setDeckBPlaying, deckBTime, deckBDuration, deckBVolume, setDeckBVolume, audioRefB, false)}
+      {renderDeck('B', deckBTrackIndex, setDeckBTrackIndex, deckBPlaying, setDeckBPlaying, deckBTime, setDeckBTime, deckBDuration, deckBVolume, setDeckBVolume, audioRefB)}
     </div>
   );
 };
