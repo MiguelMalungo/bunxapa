@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
+import { Howl, Howler } from 'howler';
 import './DJMixer.css';
 
 const DJMixer = ({ tracks }) => {
@@ -8,7 +9,7 @@ const DJMixer = ({ tracks }) => {
   const [deckATime, setDeckATime] = useState(0);
   const [deckADuration, setDeckADuration] = useState(0);
   const [deckAVolume, setDeckAVolume] = useState(1);
-  const audioRefA = useRef(null);
+  const howlRefA = useRef(null);
 
   // Deck B state
   const [deckBTrackIndex, setDeckBTrackIndex] = useState(1);
@@ -16,7 +17,11 @@ const DJMixer = ({ tracks }) => {
   const [deckBTime, setDeckBTime] = useState(0);
   const [deckBDuration, setDeckBDuration] = useState(0);
   const [deckBVolume, setDeckBVolume] = useState(1);
-  const audioRefB = useRef(null);
+  const howlRefB = useRef(null);
+
+  // Animation frame refs for smooth progress updates
+  const rafRefA = useRef(null);
+  const rafRefB = useRef(null);
 
   // Mixer state
   const [crossfader, setCrossfader] = useState(0.5); // 0 = full A, 1 = full B
@@ -32,103 +37,137 @@ const DJMixer = ({ tracks }) => {
       crossfadeMultiplier = crossfader;
     }
     const effectiveVolume = deckVolume * crossfadeMultiplier;
-    // Ensure we set to exactly 0 when muted (important for mobile)
-    return effectiveVolume < 0.001 ? 0 : effectiveVolume;
+    // Howler handles 0 volume correctly
+    return effectiveVolume;
   };
 
-  // Update audio volumes when crossfader or deck volumes change
-  // Combined into single effect to avoid timing issues on mobile
+  // Update volumes when crossfader or deck volumes change
   useEffect(() => {
-    if (audioRefA.current) {
+    if (howlRefA.current) {
       const volume = getEffectiveVolume(deckAVolume, true);
-      audioRefA.current.volume = volume;
+      howlRefA.current.volume(volume);
     }
-    if (audioRefB.current) {
+    if (howlRefB.current) {
       const volume = getEffectiveVolume(deckBVolume, false);
-      audioRefB.current.volume = volume;
+      howlRefB.current.volume(volume);
     }
   }, [crossfader, deckAVolume, deckBVolume]);
 
-  // Deck A audio handlers
+  // Cleanup helper
+  const unloadDeck = (howlRef, rafRef) => {
+    if (rafRef.current) {
+      cancelAnimationFrame(rafRef.current);
+    }
+    if (howlRef.current) {
+      howlRef.current.unload();
+      howlRef.current = null;
+    }
+  };
+
+  // Helper to init/load track
+  const loadTrack = (trackIndex, isDeckA) => {
+    const track = tracks[trackIndex];
+    if (!track) return;
+
+    // Determine references based on deck
+    const howlRef = isDeckA ? howlRefA : howlRefB;
+    const rafRef = isDeckA ? rafRefA : rafRefB;
+    const setTime = isDeckA ? setDeckATime : setDeckBTime;
+    const setDuration = isDeckA ? setDeckADuration : setDeckBDuration;
+    const setPlaying = isDeckA ? setDeckAPlaying : setDeckBPlaying;
+    const deckVolume = isDeckA ? deckAVolume : deckBVolume;
+
+    // Unload previous
+    unloadDeck(howlRef, rafRef);
+
+    // Create new Howl
+    // Important: html5: false forces Web Audio API, which allows volume control on iOS
+    howlRef.current = new Howl({
+      src: [track.file],
+      html5: false,
+      volume: getEffectiveVolume(deckVolume, isDeckA),
+      onplay: () => {
+        setPlaying(true);
+        // Start progress loop
+        const step = () => {
+          if (howlRef.current && howlRef.current.playing()) {
+            setTime(howlRef.current.seek());
+            rafRef.current = requestAnimationFrame(step);
+          }
+        };
+        rafRef.current = requestAnimationFrame(step);
+      },
+      onpause: () => {
+        setPlaying(false);
+        if (rafRef.current) cancelAnimationFrame(rafRef.current);
+      },
+      onstop: () => {
+        setPlaying(false);
+        setTime(0);
+        if (rafRef.current) cancelAnimationFrame(rafRef.current);
+      },
+      onend: () => {
+        setPlaying(false);
+        setTime(0); // Optional: reset to start
+        if (rafRef.current) cancelAnimationFrame(rafRef.current);
+      },
+      onload: () => {
+        setDuration(howlRef.current.duration());
+      },
+      onloaderror: (id, err) => {
+        console.error(`Error loading track ${track.title}:`, err);
+      }
+    });
+  };
+
+  // Deck A Load Effect
   useEffect(() => {
-    const audio = audioRefA.current;
-    if (!audio) return;
+    loadTrack(deckATrackIndex, true);
+    return () => unloadDeck(howlRefA, rafRefA);
+  }, [deckATrackIndex]);
 
-    // Set initial volume
-    audio.volume = getEffectiveVolume(deckAVolume, true);
+  // Deck B Load Effect
+  useEffect(() => {
+    loadTrack(deckBTrackIndex, false);
+    return () => unloadDeck(howlRefB, rafRefB);
+  }, [deckBTrackIndex]);
 
-    const updateTime = () => setDeckATime(audio.currentTime);
-    const updateDuration = () => {
-      setDeckADuration(audio.duration);
-      // Ensure volume is set after metadata loads (important for mobile)
-      audio.volume = getEffectiveVolume(deckAVolume, true);
-    };
-    const handleEnded = () => setDeckAPlaying(false);
-
-    audio.addEventListener('timeupdate', updateTime);
-    audio.addEventListener('loadedmetadata', updateDuration);
-    audio.addEventListener('ended', handleEnded);
-
+  // Global cleanup
+  useEffect(() => {
     return () => {
-      audio.removeEventListener('timeupdate', updateTime);
-      audio.removeEventListener('loadedmetadata', updateDuration);
-      audio.removeEventListener('ended', handleEnded);
+      unloadDeck(howlRefA, rafRefA);
+      unloadDeck(howlRefB, rafRefB);
     };
-  }, [deckATrackIndex, crossfader, deckAVolume]);
+  }, []);
 
-  // Deck B audio handlers
+  // Play/Pause Deck A Control
   useEffect(() => {
-    const audio = audioRefB.current;
-    if (!audio) return;
-
-    // Set initial volume
-    audio.volume = getEffectiveVolume(deckBVolume, false);
-
-    const updateTime = () => setDeckBTime(audio.currentTime);
-    const updateDuration = () => {
-      setDeckBDuration(audio.duration);
-      // Ensure volume is set after metadata loads (important for mobile)
-      audio.volume = getEffectiveVolume(deckBVolume, false);
-    };
-    const handleEnded = () => setDeckBPlaying(false);
-
-    audio.addEventListener('timeupdate', updateTime);
-    audio.addEventListener('loadedmetadata', updateDuration);
-    audio.addEventListener('ended', handleEnded);
-
-    return () => {
-      audio.removeEventListener('timeupdate', updateTime);
-      audio.removeEventListener('loadedmetadata', updateDuration);
-      audio.removeEventListener('ended', handleEnded);
-    };
-  }, [deckBTrackIndex, crossfader, deckBVolume]);
-
-  // Play/pause handlers
-  useEffect(() => {
-    if (audioRefA.current) {
-      if (deckAPlaying) {
-        audioRefA.current.play();
-      } else {
-        audioRefA.current.pause();
+    if (howlRefA.current) {
+      if (deckAPlaying && !howlRefA.current.playing()) {
+        howlRefA.current.play();
+      } else if (!deckAPlaying && howlRefA.current.playing()) {
+        howlRefA.current.pause();
       }
     }
-  }, [deckAPlaying, deckATrackIndex]);
+  }, [deckAPlaying]);
 
+  // Play/Pause Deck B Control
   useEffect(() => {
-    if (audioRefB.current) {
-      if (deckBPlaying) {
-        audioRefB.current.play();
-      } else {
-        audioRefB.current.pause();
+    if (howlRefB.current) {
+      if (deckBPlaying && !howlRefB.current.playing()) {
+        howlRefB.current.play();
+      } else if (!deckBPlaying && howlRefB.current.playing()) {
+        howlRefB.current.pause();
       }
     }
-  }, [deckBPlaying, deckBTrackIndex]);
+  }, [deckBPlaying]);
 
-  // Restart track function
-  const restartTrack = (audioRef, setTime) => {
-    if (audioRef.current) {
-      audioRef.current.currentTime = 0;
-      setTime(0);
+
+  const restartTrack = (howlRef, setTime) => {
+    if (howlRef.current) {
+      howlRef.current.stop(); // Stop resets position to 0
+      howlRef.current.play(); // Restart immediately
+      // Progress loop will restart via onplay
     }
   };
 
@@ -139,12 +178,14 @@ const DJMixer = ({ tracks }) => {
     return `${minutes}:${seconds.toString().padStart(2, '0')}`;
   };
 
-  const renderDeck = (deckName, trackIndex, setTrackIndex, isPlaying, setIsPlaying, currentTime, setCurrentTime, duration, volume, setVolume, audioRef) => {
+  const renderDeck = (deckName, trackIndex, setTrackIndex, isPlaying, setIsPlaying, currentTime, setCurrentTime, duration, volume, setVolume, howlRef) => {
     const track = tracks[trackIndex];
     const progress = duration > 0 ? (currentTime / duration) * 100 : 0;
 
     return (
-      <div className={`deck deck-${deckName.toLowerCase()}`}>
+      <div
+        className={`deck deck-${deckName.toLowerCase()}`}
+      >
         <div className="deck-header">
           <span className="deck-label">{deckName}</span>
         </div>
@@ -155,6 +196,7 @@ const DJMixer = ({ tracks }) => {
             value={trackIndex}
             onChange={(e) => {
               setTrackIndex(Number(e.target.value));
+              // Auto-stop when changing track handled by effect cleanup/load
               setIsPlaying(false);
             }}
           >
@@ -179,8 +221,10 @@ const DJMixer = ({ tracks }) => {
             onClick={(e) => {
               const rect = e.currentTarget.getBoundingClientRect();
               const percent = (e.clientX - rect.left) / rect.width;
-              if (audioRef.current) {
-                audioRef.current.currentTime = percent * duration;
+              if (howlRef.current) {
+                const newTime = percent * duration;
+                howlRef.current.seek(newTime);
+                setCurrentTime(newTime);
               }
             }}
           >
@@ -197,7 +241,7 @@ const DJMixer = ({ tracks }) => {
           {/* Restart button */}
           <button
             className="control-btn restart-btn"
-            onClick={() => restartTrack(audioRef, setCurrentTime)}
+            onClick={() => restartTrack(howlRef, setCurrentTime)}
             title="Restart track"
           >
             <svg viewBox="0 0 24 24" fill="currentColor">
@@ -208,7 +252,10 @@ const DJMixer = ({ tracks }) => {
           {/* Play/Pause button */}
           <button
             className={`play-btn ${isPlaying ? 'playing' : ''}`}
-            onClick={() => setIsPlaying(!isPlaying)}
+            onClick={() => {
+              // Toggle state, effect handles actual logic
+              setIsPlaying(!isPlaying);
+            }}
           >
             {isPlaying ? (
               <svg viewBox="0 0 24 24" fill="currentColor">
@@ -232,13 +279,13 @@ const DJMixer = ({ tracks }) => {
             max="1"
             step="0.01"
             value={volume}
-            onChange={(e) => setVolume(Number(e.target.value))}
+            onChange={(e) => {
+              setVolume(Number(e.target.value));
+            }}
             className="volume-slider"
           />
           <span className="volume-value">{Math.round(volume * 100)}</span>
         </div>
-
-        <audio ref={audioRef} src={track.file} preload="metadata" />
       </div>
     );
   };
@@ -246,7 +293,7 @@ const DJMixer = ({ tracks }) => {
   return (
     <div className="dj-mixer">
       {/* Deck A */}
-      {renderDeck('A', deckATrackIndex, setDeckATrackIndex, deckAPlaying, setDeckAPlaying, deckATime, setDeckATime, deckADuration, deckAVolume, setDeckAVolume, audioRefA)}
+      {renderDeck('A', deckATrackIndex, setDeckATrackIndex, deckAPlaying, setDeckAPlaying, deckATime, setDeckATime, deckADuration, deckAVolume, setDeckAVolume, howlRefA)}
 
       {/* Mixer Center */}
       <div className="mixer-center">
@@ -263,7 +310,9 @@ const DJMixer = ({ tracks }) => {
             max="1"
             step="0.01"
             value={crossfader}
-            onChange={(e) => setCrossfader(Number(e.target.value))}
+            onChange={(e) => {
+              setCrossfader(Number(e.target.value));
+            }}
             className="crossfader"
           />
           <span className="cf-label">B</span>
@@ -279,7 +328,7 @@ const DJMixer = ({ tracks }) => {
       </div>
 
       {/* Deck B */}
-      {renderDeck('B', deckBTrackIndex, setDeckBTrackIndex, deckBPlaying, setDeckBPlaying, deckBTime, setDeckBTime, deckBDuration, deckBVolume, setDeckBVolume, audioRefB)}
+      {renderDeck('B', deckBTrackIndex, setDeckBTrackIndex, deckBPlaying, setDeckBPlaying, deckBTime, setDeckBTime, deckBDuration, deckBVolume, setDeckBVolume, howlRefB)}
     </div>
   );
 };
