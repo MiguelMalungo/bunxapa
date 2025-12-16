@@ -1,17 +1,27 @@
+/* Main Container */
 .dj-mixer {
   display: flex;
   justify-content: center;
   align-items: stretch;
+  flex-wrap: wrap;
+  /* Allow wrapping for mixer below decks */
   gap: 8px;
   padding: 5px;
-  max-width: 726px;
+  width: fit-content;
+  /* Shrink to fit deck row width */
+  max-width: 384px;
+  /* NEW: Exactly 2 decks (183*2) + gap (8) + padding (10) */
   margin: 0 auto;
 }
 
 /* Deck styling */
 .deck {
   flex: 1;
+  /* Revert to flex: 1 */
   max-width: 183px;
+  /* Restore original max-width */
+  min-width: 0;
+  /* Remove the min-width assumption from previous step */
   background: rgba(255, 255, 255, 0.08);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
@@ -101,13 +111,11 @@
   width: 100%;
   height: 100%;
   border-radius: 50%;
-  background: repeating-radial-gradient(
-    circle at center,
-    transparent 0px,
-    transparent 2px,
-    rgba(255, 255, 255, 0.03) 2px,
-    rgba(255, 255, 255, 0.03) 4px
-  );
+  background: repeating-radial-gradient(circle at center,
+      transparent 0px,
+      transparent 2px,
+      rgba(255, 255, 255, 0.03) 2px,
+      rgba(255, 255, 255, 0.03) 4px);
 }
 
 .vinyl::after {
@@ -125,8 +133,13 @@
 }
 
 @keyframes spin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 .vinyl-label {
@@ -307,7 +320,13 @@
 
 /* Mixer center */
 .mixer-center {
-  width: 100px;
+  width: 100%;
+  /* NEW: Full width */
+  flex: 0 0 100%;
+  /* NEW */
+  order: 3;
+  /* NEW: Move to bottom */
+
   background: rgba(255, 255, 255, 0.06);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
@@ -315,9 +334,12 @@
   border: 1px solid rgba(255, 255, 255, 0.12);
   padding: 12px 8px;
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
+  /* NEW: Row layout for mixer */
   align-items: center;
-  gap: 15px;
+  justify-content: center;
+  gap: 20px;
+  /* NEW: Spacing */
   box-shadow:
     0 8px 32px rgba(0, 0, 0, 0.3),
     inset 0 1px 0 rgba(255, 255, 255, 0.08);
@@ -359,10 +381,12 @@
 /* Crossfader */
 .crossfader-container {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
+  /* NEW: Row layout */
   align-items: center;
   gap: 8px;
-  width: 100%;
+  width: auto;
+  /* NEW */
 }
 
 .cf-label {
@@ -372,11 +396,12 @@
 }
 
 .crossfader {
-  width: 90px;
+  width: 150px;
+  /* Increased from 90px since we have more room */
   -webkit-appearance: none;
   appearance: none;
   height: 8px;
-  background: linear-gradient(90deg, #F2C800 0%, rgba(255,255,255,0.2) 50%, #F23030 100%);
+  background: linear-gradient(90deg, #F2C800 0%, rgba(255, 255, 255, 0.2) 50%, #F23030 100%);
   border-radius: 4px;
   cursor: pointer;
 }
@@ -399,7 +424,8 @@
 
 /* Mix indicator */
 .mix-indicator {
-  width: 100%;
+  width: 100px;
+  /* Fixed width to fit in row */
 }
 
 .mix-bar {
@@ -444,6 +470,7 @@
     padding: 8px;
   }
 
+  /* ... Mobile overrides preserved ... */
   .deck-header {
     display: none;
   }
