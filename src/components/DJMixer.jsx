@@ -186,9 +186,7 @@ const DJMixer = ({ tracks }) => {
       <div
         className={`deck deck-${deckName.toLowerCase()}`}
       >
-        <div className="deck-header">
-          <span className="deck-label">{deckName}</span>
-        </div>
+
 
         {/* Track selector */}
         <div className="track-selector">
