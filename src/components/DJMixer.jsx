@@ -284,7 +284,7 @@ const DJMixer = ({ tracks }) => {
             }}
             className="volume-slider"
           />
-          <span className="volume-value">{Math.round(volume * 100)}</span>
+
         </div>
       </div>
     );
