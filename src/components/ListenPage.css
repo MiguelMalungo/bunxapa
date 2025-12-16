@@ -182,7 +182,7 @@
   /* Mobile: mixer stays at bottom */
   .listen-mixer-container {
     top: auto;
-    bottom: 100px;
+    bottom: 50px;
     left: 50%;
     transform: translateX(-50%);
     width: 95%;
