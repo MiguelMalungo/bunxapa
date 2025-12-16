@@ -456,6 +456,9 @@
     padding: 8px;
     justify-content: center;
     margin-top: -20px;
+    /* Revert desktop width constraints */
+    width: 100%;
+    max-width: 100%;
   }
 
   .deck {
@@ -543,5 +546,10 @@
 
   .cf-label {
     font-size: 24px;
+  }
+
+  .mix-indicator {
+    width: 100%;
+    /* Revert to full width for mobile */
   }
 }
