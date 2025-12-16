@@ -229,7 +229,7 @@
   /* Navigation Menu */
   .nav-menu {
     top: calc(3.2% + 20px);
-    left: calc(4.0% + 35px);
+    left: calc(4.0% + 10px);
     gap: 4.5vw;
     padding: 1.2% 4.5%;
     border-radius: 3.4vw;
