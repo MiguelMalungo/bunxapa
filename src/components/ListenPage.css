@@ -1,0 +1,194 @@
+.listen-page {
+  position: relative;
+  width: 100%;
+  min-height: 100vh;
+  overflow-x: hidden;
+  overflow-y: auto;
+  background-color: #000;
+}
+
+.listen-video {
+  position: relative;
+  width: 100%;
+  height: auto;
+  display: block;
+  z-index: 1;
+}
+
+.listen-text {
+  position: absolute;
+  top: 200px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: 'Inter', sans-serif;
+  font-weight: 900;
+  font-size: calc(18vw + 10px);
+  color: white;
+  text-align: center;
+  margin: 0;
+  padding: 0;
+  z-index: 2;
+  line-height: 0.8;
+  letter-spacing: -0.04em;
+  text-transform: uppercase;
+  mix-blend-mode: overlay;
+  pointer-events: none;
+}
+
+.listen-text .x-letter {
+  color: #F2C800;
+}
+
+/* Navigation Menu for Listen Page - Centered */
+.listen-page .nav-menu {
+  position: absolute;
+  top: 45px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 95.2px;
+  padding: 17px 95.2px;
+  border-radius: 71.4px;
+  z-index: 10;
+}
+
+.listen-page .nav-link {
+  color: white;
+  text-decoration: none;
+  font-size: 38.08px;
+  font-weight: 600;
+  letter-spacing: 2.38px;
+  transition: all 0.3s ease;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.listen-page .nav-link:hover,
+.listen-page .nav-link:focus {
+  color: #F2C800;
+  transform: scale(1.05);
+  text-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+}
+
+.listen-page .nav-link:active,
+.listen-page .nav-link.active {
+  color: #F2C800;
+}
+
+/* DJ Mixer Container - Desktop: right above footer, centered */
+.listen-mixer-container {
+  position: absolute;
+  bottom: 90px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 10;
+}
+
+/* Footer */
+.listen-footer {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  padding: 40px 40px;
+  z-index: 3;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.listen-footer .footer-content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  max-width: 1200px;
+  margin: 0 auto;
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 14px;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Helvetica', 'Arial', sans-serif;
+}
+
+.listen-footer .footer-right {
+  display: flex;
+  align-items: center;
+}
+
+.listen-footer .footer-author {
+  font-weight: 600;
+  color: #F2C800;
+  margin-left: 5px;
+}
+
+.listen-footer .footer-logo {
+  height: 20px;
+  width: auto;
+  margin-left: 10px;
+  object-fit: contain;
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+  .listen-page .nav-menu {
+    top: calc(3.2% + 20px);
+    left: 50%;
+    transform: translateX(-50%);
+    gap: 4.5vw;
+    padding: 1.2% 4.5%;
+    border-radius: 3.4vw;
+  }
+
+  .listen-page .nav-link {
+    font-size: 1.8vw;
+    letter-spacing: 0.11vw;
+  }
+}
+
+@media (max-width: 768px) {
+  .listen-page {
+    min-height: 100vh;
+  }
+
+  .listen-video {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .listen-page .nav-menu {
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    gap: 3vw;
+    padding: 10px 15px;
+  }
+
+  .listen-page .nav-link {
+    font-size: 3.75vw;
+  }
+
+  /* Mobile: BUNXAPA full width, no side padding */
+  .listen-text {
+    top: 8%;
+    font-size: calc(20vw);
+    display: block;
+    width: 100%;
+    padding: 0;
+    letter-spacing: -0.05em;
+  }
+
+  /* Mobile: mixer stays at bottom */
+  .listen-mixer-container {
+    top: auto;
+    bottom: 100px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 95%;
+  }
+
+  .listen-footer {
+    padding: 8px 15px;
+  }
+}

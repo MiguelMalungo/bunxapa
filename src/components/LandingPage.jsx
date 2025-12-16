@@ -1,4 +1,5 @@
 import React, { useRef, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import './LandingPage.css';
 import DJMixer from './DJMixer';
 
@@ -65,9 +66,9 @@ const LandingPage = () => {
 
         {/* Section 1: Navigation Menu - Top */}
         <nav className="nav-menu">
-          <a href="#home" className="nav-link">HOME</a>
+          <a href="#home" className="nav-link active">HOME</a>
           <a href="#dates" className="nav-link">DATES</a>
-          <a href="#listen" className="nav-link">LISTEN</a>
+          <Link to="/listen" className="nav-link">LISTEN</Link>
           <a href="#shop" className="nav-link">SHOP</a>
         </nav>
 
@@ -143,6 +144,16 @@ const LandingPage = () => {
         {/* Section 4: DJ Mixer - Bottom */}
         <div className="music-player dj-mixer-container">
           <DJMixer tracks={tracks} />
+        </div>
+
+        {/* Desktop Footer Credit */}
+        <div className="desktop-footer-credit">
+          Created by <span className="footer-author">DIGISOL</span>
+          <img
+            src={`${import.meta.env.BASE_URL}logodigi.png`}
+            alt="DIGISOL Logo"
+            className="footer-logo"
+          />
         </div>
 
         {/* Section 2: Social Media Icons - Right Fixed */}
