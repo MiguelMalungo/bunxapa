@@ -324,7 +324,7 @@
 
   /* Additional tweaks for very small screens if needed, inheriting the fluid base */
   .nav-link {
-    font-size: 2.5vw;
+    font-size: 3.75vw;
   }
 
   .social-icon {
