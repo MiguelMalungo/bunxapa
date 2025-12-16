@@ -123,7 +123,7 @@
 .tour-dates {
   position: absolute;
   top: 750px;
-  right: 100px;
+  right: 130px;
   padding: 25px 30px;
   border-radius: 25px;
   z-index: 10;
@@ -354,15 +354,15 @@
   .background-image .music-player:not(.mobile-only) {
     display: none;
   }
-  
+
   .bottom-section {
     position: relative;
   }
-  
+
   .bottom-text {
     position: relative;
   }
-  
+
   .bottom-section .music-player.mobile-only {
     position: absolute;
     width: 95%;
@@ -378,21 +378,21 @@
   .bottom-section .music-player.mobile-only.dj-mixer-container {
     top: 5%;
   }
-  
+
   .bottom-text {
     display: none;
   }
-  
+
   @media (min-width: 769px) {
     .music-player.mobile-only {
       display: none !important;
     }
-    
+
     .background-image .music-player:not(.mobile-only) {
       display: block;
     }
   }
-  
+
   @media (max-width: 768px) {
     .background-image .music-player:not(.mobile-only) {
       display: none;
@@ -503,7 +503,7 @@
   .bottom-footer {
     padding: 40px 40px;
   }
-  
+
   .bottom-text {
     font-size: calc(18vw + 20px);
   }
