@@ -392,6 +392,9 @@ const DJMixer = ({ tracks }) => {
 
       {/* Deck B */}
       {renderDeck('B', deckBTrackIndex, setDeckBTrackIndex, deckBPlaying, setDeckBPlaying, deckBTime, setDeckBTime, deckBDuration, deckBVolume, setDeckBVolume, howlRefB)}
+
+      {/* Mobile hint */}
+      <div className="mobile-hint">Use Headphones to Mix</div>
     </div>
   );
 };

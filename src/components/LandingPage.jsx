@@ -13,7 +13,10 @@ const LandingPage = () => {
     { title: 'Aanda', artist: 'BUNXAPA', file: `${import.meta.env.BASE_URL}aanda.mp3` },
     { title: 'Of the Sun', artist: 'BUNXAPA', file: `${import.meta.env.BASE_URL}oftheSun.mp3` },
     { title: 'Blop', artist: 'BUNXAPA', file: `${import.meta.env.BASE_URL}Blop.mp3` },
-    { title: 'Release', artist: 'BUNXAPA', file: `${import.meta.env.BASE_URL}Release.mp3` }
+    { title: 'Release', artist: 'BUNXAPA', file: `${import.meta.env.BASE_URL}Release.mp3` },
+    { title: 'Uno1', artist: 'BUNXAPA', file: `${import.meta.env.BASE_URL}Uno1.mp3` },
+    { title: 'Uno2', artist: 'BUNXAPA', file: `${import.meta.env.BASE_URL}Uno2.mp3` },
+    { title: 'Fields', artist: 'BUNXAPA', file: `${import.meta.env.BASE_URL}Fields.mp3` }
   ];
 
   useEffect(() => {
