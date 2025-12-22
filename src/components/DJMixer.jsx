@@ -47,22 +47,13 @@ const DJMixer = ({ tracks }) => {
 
   // Update volumes when crossfader or deck volumes change
   useEffect(() => {
-    console.log('Volume update effect triggered. crossfader:', crossfader);
     if (howlRefA.current) {
       const volume = getEffectiveVolume(deckAVolume, true);
-      console.log('Deck A - deckVolume:', deckAVolume, 'crossfader:', crossfader, 'effectiveVolume:', volume);
-      console.log('Deck A Howl state - playing:', howlRefA.current.playing(), 'loaded:', howlRefA.current.state());
       howlRefA.current.volume(volume);
-    } else {
-      console.log('Deck A Howl not initialized');
     }
     if (howlRefB.current) {
       const volume = getEffectiveVolume(deckBVolume, false);
-      console.log('Deck B - deckVolume:', deckBVolume, 'crossfader:', crossfader, 'effectiveVolume:', volume);
-      console.log('Deck B Howl state - playing:', howlRefB.current.playing(), 'loaded:', howlRefB.current.state());
       howlRefB.current.volume(volume);
-    } else {
-      console.log('Deck B Howl not initialized');
     }
   }, [crossfader, deckAVolume, deckBVolume]);
 
@@ -326,28 +317,17 @@ const DJMixer = ({ tracks }) => {
             step="0.01"
             value={crossfader}
             onTouchMove={(e) => {
-              const newValue = Number(e.target.value);
-              console.log('Crossfader onTouchMove:', newValue);
-              setCrossfader(newValue);
+              setCrossfader(Number(e.target.value));
             }}
             onInput={(e) => {
-              const newValue = Number(e.target.value);
-              console.log('Crossfader onInput:', newValue);
-              setCrossfader(newValue);
+              setCrossfader(Number(e.target.value));
             }}
             onChange={(e) => {
-              const newValue = Number(e.target.value);
-              console.log('Crossfader onChange:', newValue);
-              setCrossfader(newValue);
+              setCrossfader(Number(e.target.value));
             }}
             className="crossfader"
           />
           <span className="cf-label">B</span>
-        </div>
-
-        {/* Debug display */}
-        <div style={{ color: '#fff', fontSize: '12px', marginTop: '5px' }}>
-          CF: {crossfader.toFixed(2)}
         </div>
 
         {/* Visual indicator */}
