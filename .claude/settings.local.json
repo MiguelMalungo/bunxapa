@@ -16,7 +16,9 @@
       "Bash(git push:*)",
       "Bash(npx gh-pages:*)",
       "Bash(open http://localhost:5173/bunxapa/)",
-      "Bash(ffprobe:*)"
+      "Bash(ffprobe:*)",
+      "Bash(cat:*)",
+      "Bash(~/.bun/bin/bun run:*)"
     ],
     "deny": [],
     "ask": []

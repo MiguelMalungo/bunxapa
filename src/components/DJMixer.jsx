@@ -52,10 +52,12 @@ const DJMixer = ({ tracks }) => {
   useEffect(() => {
     if (howlRefA.current) {
       const volume = getEffectiveVolume(deckAVolume, true);
+      console.log('Setting Deck A volume:', volume, 'crossfader:', crossfader);
       howlRefA.current.volume(volume);
     }
     if (howlRefB.current) {
       const volume = getEffectiveVolume(deckBVolume, false);
+      console.log('Setting Deck B volume:', volume, 'crossfader:', crossfader);
       howlRefB.current.volume(volume);
     }
   }, [crossfader, deckAVolume, deckBVolume]);
@@ -286,6 +288,9 @@ const DJMixer = ({ tracks }) => {
             max="1"
             step="0.01"
             value={volume}
+            onInput={(e) => {
+              setVolume(Number(e.target.value));
+            }}
             onChange={(e) => {
               setVolume(Number(e.target.value));
             }}
@@ -318,10 +323,14 @@ const DJMixer = ({ tracks }) => {
             step="0.01"
             value={crossfader}
             onInput={(e) => {
-              setCrossfader(Number(e.target.value));
+              const newValue = Number(e.target.value);
+              console.log('Crossfader onInput:', newValue);
+              setCrossfader(newValue);
             }}
             onChange={(e) => {
-              setCrossfader(Number(e.target.value));
+              const newValue = Number(e.target.value);
+              console.log('Crossfader onChange:', newValue);
+              setCrossfader(newValue);
             }}
             className="crossfader"
           />
