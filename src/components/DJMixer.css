@@ -398,6 +398,8 @@
   background: linear-gradient(90deg, #F2C800 0%, rgba(255, 255, 255, 0.2) 50%, #F23030 100%);
   border-radius: 4px;
   cursor: pointer;
+  touch-action: none;
+  /* Prevent iOS scroll interference */
 }
 
 .crossfader::-webkit-slider-thumb {
@@ -410,10 +412,16 @@
   cursor: pointer;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
   transition: transform 0.2s ease;
+  -webkit-tap-highlight-color: transparent;
+  /* Remove iOS tap highlight */
 }
 
 .crossfader::-webkit-slider-thumb:hover {
   transform: scaleY(1.1);
+}
+
+.crossfader::-webkit-slider-thumb:active {
+  transform: scaleY(1.15);
 }
 
 /* Mix indicator */
