@@ -26,28 +26,12 @@ const DJMixer = ({ tracks }) => {
   // Mixer state
   const [crossfader, setCrossfader] = useState(0.5); // 0 = full A, 1 = full B
 
-  // Force Web Audio API for proper volume control
-  const needsHTML5Audio = false;
+  // Detect iOS
+  const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) ||
+    (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
 
-  // Unlock Web Audio on iOS when user interacts
-  useEffect(() => {
-    const unlockAudio = () => {
-      if (Howler.ctx && Howler.ctx.state === 'suspended') {
-        Howler.ctx.resume();
-      }
-    };
-
-    // Add listeners for user interaction to unlock audio
-    document.addEventListener('touchstart', unlockAudio, { once: true });
-    document.addEventListener('touchend', unlockAudio, { once: true });
-    document.addEventListener('click', unlockAudio, { once: true });
-
-    return () => {
-      document.removeEventListener('touchstart', unlockAudio);
-      document.removeEventListener('touchend', unlockAudio);
-      document.removeEventListener('click', unlockAudio);
-    };
-  }, []);
+  // Use HTML5 audio on iOS (required for audio to play)
+  const needsHTML5Audio = isIOS;
 
   // Calculate effective volumes based on crossfader
   const getEffectiveVolume = (deckVolume, isDeckA) => {
@@ -69,12 +53,28 @@ const DJMixer = ({ tracks }) => {
     if (howlRefA.current) {
       const volume = getEffectiveVolume(deckAVolume, true);
       howlRefA.current.volume(volume);
+
+      // For iOS HTML5 audio, also set volume directly on audio element
+      if (isIOS && howlRefA.current._sounds && howlRefA.current._sounds[0]) {
+        const node = howlRefA.current._sounds[0]._node;
+        if (node && node.volume !== undefined) {
+          node.volume = volume;
+        }
+      }
     }
     if (howlRefB.current) {
       const volume = getEffectiveVolume(deckBVolume, false);
       howlRefB.current.volume(volume);
+
+      // For iOS HTML5 audio, also set volume directly on audio element
+      if (isIOS && howlRefB.current._sounds && howlRefB.current._sounds[0]) {
+        const node = howlRefB.current._sounds[0]._node;
+        if (node && node.volume !== undefined) {
+          node.volume = volume;
+        }
+      }
     }
-  }, [crossfader, deckAVolume, deckBVolume]);
+  }, [crossfader, deckAVolume, deckBVolume, isIOS]);
 
   // Cleanup helper
   const unloadDeck = (howlRef, rafRef) => {
@@ -104,8 +104,8 @@ const DJMixer = ({ tracks }) => {
     unloadDeck(howlRef, rafRef);
 
     // Create new Howl
-    // Use Web Audio API (html5: false) for dynamic volume control
-    // Audio context is unlocked on first user interaction via useEffect
+    // iOS requires html5: true for audio to play
+    // Volume control is handled by directly manipulating the audio element
     howlRef.current = new Howl({
       src: [track.file],
       html5: needsHTML5Audio,
