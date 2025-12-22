@@ -38,27 +38,42 @@ const DJMixer = ({ tracks }) => {
   const gainNodeA = useRef(null);
   const gainNodeB = useRef(null);
 
-  // Unlock audio on iOS
+  // Unlock audio on iOS with aggressive unlock
   useEffect(() => {
     if (!isIOS) return;
 
-    const unlockAudio = () => {
-      if (Howler.ctx && Howler.ctx.state === 'suspended') {
-        Howler.ctx.resume();
-      }
-      // Create gain nodes for volume control
-      if (Howler.ctx && !gainNodeA.current) {
-        gainNodeA.current = Howler.ctx.createGain();
-        gainNodeB.current = Howler.ctx.createGain();
+    const unlockAudio = async () => {
+      // Resume audio context
+      if (Howler.ctx) {
+        if (Howler.ctx.state === 'suspended') {
+          await Howler.ctx.resume();
+        }
+
+        // Play and immediately stop a silent buffer to fully unlock
+        const buffer = Howler.ctx.createBuffer(1, 1, 22050);
+        const source = Howler.ctx.createBufferSource();
+        source.buffer = buffer;
+        source.connect(Howler.ctx.destination);
+        source.start(0);
+
+        // Create gain nodes
+        if (!gainNodeA.current) {
+          gainNodeA.current = Howler.ctx.createGain();
+          gainNodeB.current = Howler.ctx.createGain();
+        }
       }
     };
 
-    document.addEventListener('touchstart', unlockAudio, { once: true });
-    document.addEventListener('click', unlockAudio, { once: true });
+    // Try multiple events
+    const events = ['touchstart', 'touchend', 'click', 'mousedown'];
+    events.forEach(event => {
+      document.addEventListener(event, unlockAudio, { once: true, passive: true });
+    });
 
     return () => {
-      document.removeEventListener('touchstart', unlockAudio);
-      document.removeEventListener('click', unlockAudio);
+      events.forEach(event => {
+        document.removeEventListener(event, unlockAudio);
+      });
     };
   }, [isIOS]);
 
@@ -287,7 +302,11 @@ const DJMixer = ({ tracks }) => {
           {/* Play/Pause button */}
           <button
             className={`play-btn ${isPlaying ? 'playing' : ''}`}
-            onClick={() => {
+            onClick={async () => {
+              // Unlock audio on iOS when play is pressed
+              if (isIOS && Howler.ctx && Howler.ctx.state === 'suspended') {
+                await Howler.ctx.resume();
+              }
               // Toggle state, effect handles actual logic
               setIsPlaying(!isPlaying);
             }}
