@@ -26,12 +26,9 @@ const DJMixer = ({ tracks }) => {
   // Mixer state
   const [crossfader, setCrossfader] = useState(0.5); // 0 = full A, 1 = full B
 
-  // Detect iOS device - needs html5: true for loudspeaker audio in Safari/Chrome
-  // Google Search App (GSA) works fine with Web Audio API
-  const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) ||
-    (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
-  const isGoogleApp = /GSA/i.test(navigator.userAgent);
-  const needsHTML5Audio = isIOS && !isGoogleApp;
+  // Force Web Audio API for proper volume control
+  // HTML5 audio mode on iOS doesn't allow dynamic volume changes
+  const needsHTML5Audio = false;
 
   // Calculate effective volumes based on crossfader
   const getEffectiveVolume = (deckVolume, isDeckA) => {
@@ -97,12 +94,11 @@ const DJMixer = ({ tracks }) => {
     unloadDeck(howlRef, rafRef);
 
     // Create new Howl
-    // iOS Safari/Chrome need html5: true for loudspeaker (receiver speaker issue)
-    // Google app and desktop use Web Audio API (html5: false) for better mixing
-    // Howler's .volume() works with both modes
+    // Force Web Audio API (html5: false) for dynamic volume control
+    // HTML5 audio on iOS doesn't allow real-time volume changes needed for crossfading
     howlRef.current = new Howl({
       src: [track.file],
-      html5: needsHTML5Audio,
+      html5: false,
       volume: getEffectiveVolume(deckVolume, isDeckA),
       onplay: () => {
         setPlaying(true);
