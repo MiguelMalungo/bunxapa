@@ -113,7 +113,7 @@ const LandingPage = () => {
           <a href="#home" className="nav-link active">HOME</a>
           <Link to="/tour" className="nav-link">DATES</Link>
           <Link to="/listen" className="nav-link">LISTEN</Link>
-          <a href="#shop" className="nav-link">SHOP</a>
+          <Link to="/shop" className="nav-link">SHOP</Link>
         </nav>
 
         {/* Section 5: Action Icons - Left Vertical */}

@@ -88,7 +88,7 @@ const ListenPage = () => {
         <Link to="/" className="nav-link">HOME</Link>
         <Link to="/tour" className="nav-link">DATES</Link>
         <Link to="/listen" className="nav-link active">LISTEN</Link>
-        <a href="#shop" className="nav-link">SHOP</a>
+        <Link to="/shop" className="nav-link">SHOP</Link>
       </nav>
 
       {/* DJ Mixer - Centered at bottom right over footer */}

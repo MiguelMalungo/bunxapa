@@ -90,7 +90,7 @@ const TourPage = () => {
         <Link to="/" className="nav-link">HOME</Link>
         <Link to="/tour" className="nav-link active">DATES</Link>
         <Link to="/listen" className="nav-link">LISTEN</Link>
-        <a href="#shop" className="nav-link">SHOP</a>
+        <Link to="/shop" className="nav-link">SHOP</Link>
       </nav>
 
       {/* Tour Dates Container */}
