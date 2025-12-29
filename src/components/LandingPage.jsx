@@ -12,6 +12,7 @@ const LandingPage = () => {
   const actionsRef = useRef(null);
   const mixerRef = useRef(null);
   const footerRef = useRef(null);
+  const [activeDate, setActiveDate] = useState(null);
 
   const tracks = [
     { title: 'Echoes Extend', artist: 'BUNXAPA', file: `${import.meta.env.BASE_URL}EchoesExtend.mp3` },
@@ -106,7 +107,8 @@ const LandingPage = () => {
     <div className="landing-page">
       {/* Background Image Container */}
       <div className="background-image" ref={bgRef}>
-        <img src={`${import.meta.env.BASE_URL}artwork.webp`} alt="BUNXAPA Artwork" className="animate-bg" />
+        <img src={`${import.meta.env.BASE_URL}artwork.webp`} alt="BUNXAPA Artwork" className="animate-bg desktop-bg" />
+        <img src={`${import.meta.env.BASE_URL}artworkM.webp`} alt="BUNXAPA Artwork" className="animate-bg mobile-bg" />
 
         {/* Section 1: Navigation Menu - Top */}
         <nav className="nav-menu animate-nav" ref={navRef}>
@@ -141,37 +143,40 @@ const LandingPage = () => {
         </div>
 
         {/* Section 3: Tour Dates - Top Right */}
-        <div className="tour-dates animate-tour" ref={tourRef}>
+        <div
+          className="tour-dates animate-tour"
+          ref={tourRef}
+        >
           <h3 className="tour-dates-title">TOUR DATES</h3>
-          <div className="tour-date-item animate-date-1">
+          <div className={`tour-date-item animate-date-1 ${activeDate === 1 ? 'active' : ''}`} onClick={(e) => { e.stopPropagation(); setActiveDate(activeDate === 1 ? null : 1); }}>
             <div className="date">DEC 15</div>
             <div className="venue">ISTANBUL</div>
           </div>
-          <div className="tour-date-item animate-date-2">
+          <div className={`tour-date-item animate-date-2 ${activeDate === 2 ? 'active' : ''}`} onClick={(e) => { e.stopPropagation(); setActiveDate(activeDate === 2 ? null : 2); }}>
             <div className="date">DEC 22</div>
             <div className="venue">BALI</div>
           </div>
-          <div className="tour-date-item animate-date-3">
+          <div className={`tour-date-item animate-date-3 ${activeDate === 3 ? 'active' : ''}`} onClick={(e) => { e.stopPropagation(); setActiveDate(activeDate === 3 ? null : 3); }}>
             <div className="date">JAN 05</div>
             <div className="venue">SINGAPORE</div>
           </div>
-          <div className="tour-date-item animate-date-4">
+          <div className={`tour-date-item animate-date-4 ${activeDate === 4 ? 'active' : ''}`} onClick={(e) => { e.stopPropagation(); setActiveDate(activeDate === 4 ? null : 4); }}>
             <div className="date">JAN 18</div>
             <div className="venue">BANGKOK</div>
           </div>
-          <div className="tour-date-item animate-date-5">
+          <div className={`tour-date-item animate-date-5 ${activeDate === 5 ? 'active' : ''}`} onClick={(e) => { e.stopPropagation(); setActiveDate(activeDate === 5 ? null : 5); }}>
             <div className="date">FEB 02</div>
             <div className="venue">PARIS</div>
           </div>
-          <div className="tour-date-item animate-date-6">
+          <div className={`tour-date-item animate-date-6 ${activeDate === 6 ? 'active' : ''}`} onClick={(e) => { e.stopPropagation(); setActiveDate(activeDate === 6 ? null : 6); }}>
             <div className="date">FEB 14</div>
             <div className="venue">AMSTERDAM</div>
           </div>
-          <div className="tour-date-item animate-date-7">
+          <div className={`tour-date-item animate-date-7 ${activeDate === 7 ? 'active' : ''}`} onClick={(e) => { e.stopPropagation(); setActiveDate(activeDate === 7 ? null : 7); }}>
             <div className="date">MAR 08</div>
             <div className="venue">TULUM</div>
           </div>
-          <div className="tour-date-item animate-date-8">
+          <div className={`tour-date-item animate-date-8 ${activeDate === 8 ? 'active' : ''}`} onClick={(e) => { e.stopPropagation(); setActiveDate(activeDate === 8 ? null : 8); }}>
             <div className="date">MAR 22</div>
             <div className="venue">MEXICO CITY</div>
           </div>
@@ -190,6 +195,30 @@ const LandingPage = () => {
             alt="DIGISOL Logo"
             className="footer-logo"
           />
+        </div>
+
+        {/* Mobile Social Icons - Bottom of background image */}
+        <div className="mobile-social-icons">
+          <a href="#instagram" className="mobile-social-icon">
+            <svg viewBox="0 0 24 24" fill="currentColor">
+              <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z" />
+            </svg>
+          </a>
+          <a href="#twitter" className="mobile-social-icon">
+            <svg viewBox="0 0 24 24" fill="currentColor">
+              <path d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723c-.951.555-2.005.959-3.127 1.184a4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.827 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A9.935 9.935 0 0024 4.59z" />
+            </svg>
+          </a>
+          <a href="#spotify" className="mobile-social-icon">
+            <svg viewBox="0 0 24 24" fill="currentColor">
+              <path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.559.3z" />
+            </svg>
+          </a>
+          <a href="#youtube" className="mobile-social-icon">
+            <svg viewBox="0 0 24 24" fill="currentColor">
+              <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z" />
+            </svg>
+          </a>
         </div>
 
         {/* Section 2: Social Media Icons - Right Fixed */}

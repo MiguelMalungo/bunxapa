@@ -29,11 +29,21 @@
   display: block;
 }
 
+/* Show desktop background by default, hide mobile */
+.background-image .desktop-bg {
+  display: block;
+}
+
+.background-image .mobile-bg {
+  display: none;
+}
+
 /* Background blur fade-in animation */
 @keyframes blurFadeIn {
   from {
     filter: blur(30px);
   }
+
   to {
     filter: blur(0);
   }
@@ -58,6 +68,7 @@
     transform: translateY(30px);
     filter: blur(10px);
   }
+
   to {
     transform: translateY(0);
     filter: blur(0);
@@ -69,6 +80,7 @@
     transform: translateX(-50%) translateY(30px);
     filter: blur(10px);
   }
+
   to {
     transform: translateX(-50%) translateY(0);
     filter: blur(0);
@@ -80,6 +92,7 @@
     transform: translateX(-30px);
     filter: blur(10px);
   }
+
   to {
     transform: translateX(0);
     filter: blur(0);
@@ -91,6 +104,7 @@
     transform: translateX(30px);
     filter: blur(10px);
   }
+
   to {
     transform: translateX(0);
     filter: blur(0);
@@ -219,18 +233,50 @@
   margin-bottom: 8px;
   transition: all 0.3s ease;
   cursor: pointer;
+  background: transparent;
+  padding: 0;
+  border: none;
 }
 
-.animate-tour.visible .animate-date-1 { animation: fadeSlideBlur 0.5s ease-out 0.2s both; }
-.animate-tour.visible .animate-date-2 { animation: fadeSlideBlur 0.5s ease-out 0.3s both; }
-.animate-tour.visible .animate-date-3 { animation: fadeSlideBlur 0.5s ease-out 0.4s both; }
-.animate-tour.visible .animate-date-4 { animation: fadeSlideBlur 0.5s ease-out 0.5s both; }
-.animate-tour.visible .animate-date-5 { animation: fadeSlideBlur 0.5s ease-out 0.6s both; }
-.animate-tour.visible .animate-date-6 { animation: fadeSlideBlur 0.5s ease-out 0.7s both; }
-.animate-tour.visible .animate-date-7 { animation: fadeSlideBlur 0.5s ease-out 0.8s both; }
-.animate-tour.visible .animate-date-8 { animation: fadeSlideBlur 0.5s ease-out 0.9s both; }
-.animate-tour.visible .animate-date-9 { animation: fadeSlideBlur 0.5s ease-out 1.0s both; }
-.animate-tour.visible .animate-date-10 { animation: fadeSlideBlur 0.5s ease-out 1.1s both; }
+.animate-tour.visible .animate-date-1 {
+  animation: fadeSlideBlur 0.5s ease-out 0.2s both;
+}
+
+.animate-tour.visible .animate-date-2 {
+  animation: fadeSlideBlur 0.5s ease-out 0.3s both;
+}
+
+.animate-tour.visible .animate-date-3 {
+  animation: fadeSlideBlur 0.5s ease-out 0.4s both;
+}
+
+.animate-tour.visible .animate-date-4 {
+  animation: fadeSlideBlur 0.5s ease-out 0.5s both;
+}
+
+.animate-tour.visible .animate-date-5 {
+  animation: fadeSlideBlur 0.5s ease-out 0.6s both;
+}
+
+.animate-tour.visible .animate-date-6 {
+  animation: fadeSlideBlur 0.5s ease-out 0.7s both;
+}
+
+.animate-tour.visible .animate-date-7 {
+  animation: fadeSlideBlur 0.5s ease-out 0.8s both;
+}
+
+.animate-tour.visible .animate-date-8 {
+  animation: fadeSlideBlur 0.5s ease-out 0.9s both;
+}
+
+.animate-tour.visible .animate-date-9 {
+  animation: fadeSlideBlur 0.5s ease-out 1.0s both;
+}
+
+.animate-tour.visible .animate-date-10 {
+  animation: fadeSlideBlur 0.5s ease-out 1.1s both;
+}
 
 .tour-date-item:last-child {
   margin-bottom: 0;
@@ -329,10 +375,21 @@
   animation: fadeSlideLeftBlur 0.8s ease-out both;
 }
 
-.animate-actions.visible .animate-icon-1 { animation: fadeSlideLeftBlur 0.5s ease-out 0.2s both; }
-.animate-actions.visible .animate-icon-2 { animation: fadeSlideLeftBlur 0.5s ease-out 0.3s both; }
-.animate-actions.visible .animate-icon-3 { animation: fadeSlideLeftBlur 0.5s ease-out 0.4s both; }
-.animate-actions.visible .animate-icon-4 { animation: fadeSlideLeftBlur 0.5s ease-out 0.5s both; }
+.animate-actions.visible .animate-icon-1 {
+  animation: fadeSlideLeftBlur 0.5s ease-out 0.2s both;
+}
+
+.animate-actions.visible .animate-icon-2 {
+  animation: fadeSlideLeftBlur 0.5s ease-out 0.3s both;
+}
+
+.animate-actions.visible .animate-icon-3 {
+  animation: fadeSlideLeftBlur 0.5s ease-out 0.4s both;
+}
+
+.animate-actions.visible .animate-icon-4 {
+  animation: fadeSlideLeftBlur 0.5s ease-out 0.5s both;
+}
 
 .action-icon {
   background: none;
@@ -538,21 +595,154 @@
   }
 
   @media (max-width: 768px) {
+    /* Swap background images for mobile */
+    .background-image .desktop-bg {
+      display: none !important;
+    }
+
+    .background-image .mobile-bg {
+      display: block !important;
+    }
+
     .background-image .music-player:not(.mobile-only) {
       display: none;
     }
-  }
 
-  .tour-dates-title {
-    font-size: 3vw;
-  }
+    /* Center align navigation menu and make it 50% larger */
+    .nav-menu {
+      left: 50% !important;
+      transform: translateX(-50%) !important;
+      justify-content: center;
+      padding: 1.2% 2% !important;
+      width: auto;
+    }
 
-  .date {
-    font-size: 2.5vw;
-  }
+    .nav-menu.animate-nav.visible {
+      animation: none !important;
+      transform: translateX(-50%) !important;
+    }
 
-  .venue {
-    font-size: 2vw;
+    .nav-link {
+      font-size: 5.625vw !important;
+    }
+
+    /* Hide tour dates completely on mobile */
+    .background-image .tour-dates {
+      display: none !important;
+    }
+
+    .tour-dates {
+      display: none !important;
+    }
+
+    /* Hide action icons (black icons) on mobile */
+    .action-icons {
+      display: none !important;
+    }
+
+    /* Hide social icons from their original position */
+    .background-image .social-icons {
+      display: none !important;
+    }
+
+    /* Show mobile social icons - horizontal line centered at bottom of background image */
+    .background-image .mobile-social-icons {
+      display: flex !important;
+      flex-direction: row;
+      justify-content: center;
+      align-items: center;
+      gap: 30px;
+      position: absolute;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 10;
+      width: 100%;
+      padding: 0 20px;
+    }
+
+    .mobile-social-icon {
+      width: 40px;
+      height: 40px;
+      color: white;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .mobile-social-icon svg {
+      width: 32px;
+      height: 32px;
+      filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
+    }
+
+    .mobile-social-icon:hover {
+      transform: scale(1.15);
+    }
+
+    .landing-page .tour-dates-title {
+      font-size: 15px;
+      color: black;
+      margin-bottom: 5px;
+      font-weight: 800;
+      letter-spacing: 1px;
+      font-family: 'Inter', sans-serif;
+      text-shadow: none !important;
+      text-align: right;
+    }
+
+    .landing-page .tour-dates .tour-date-item {
+      display: flex !important;
+      flex-direction: row !important;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 6px !important;
+      margin-bottom: 3.2px;
+      text-align: right;
+      background: transparent !important;
+      padding: 0 !important;
+      border: none !important;
+      box-shadow: none !important;
+      backdrop-filter: none !important;
+      -webkit-backdrop-filter: none !important;
+      height: auto !important;
+      min-height: 0 !important;
+    }
+
+    .landing-page .tour-dates .tour-date-item.active .date,
+    .landing-page .tour-dates .tour-date-item.active .venue {
+      color: white !important;
+    }
+
+    .landing-page .tour-dates .date {
+      font-size: 11px;
+      font-weight: 800;
+      color: black;
+      margin-bottom: 0;
+      letter-spacing: 0.5px;
+      text-shadow: none !important;
+      font-family: 'Inter', sans-serif;
+      white-space: nowrap;
+    }
+
+    .landing-page .tour-dates .venue {
+      font-size: 10px;
+      font-weight: 800;
+      color: black;
+      opacity: 0.8;
+      text-transform: uppercase;
+      text-shadow: none !important;
+      font-family: 'Inter', sans-serif;
+      margin-top: 0;
+      white-space: nowrap;
+    }
+
+    .landing-page .tour-dates .tour-date-item:hover .date,
+    .landing-page .tour-dates .tour-date-item:hover .venue {
+      font-size: inherit;
+      /* Prevent jumping on mobile */
+    }
   }
 
   /* Footer mobile styles */
@@ -595,6 +785,11 @@
   background-color: #000;
   min-height: 100px;
   padding: 5% 0 0 0;
+}
+
+/* Mobile Social Icons - hidden by default, shown on mobile */
+.mobile-social-icons {
+  display: none;
 }
 
 .bottom-text {
