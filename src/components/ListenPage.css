@@ -17,17 +17,6 @@
   }
 }
 
-@keyframes zoomInBlur {
-  from {
-    transform: translateX(-50%) scale(3);
-    filter: blur(15px);
-  }
-  to {
-    transform: translateX(-50%) scale(1);
-    filter: blur(0);
-  }
-}
-
 @keyframes fadeSlideBlur {
   from {
     transform: translateY(30px);
@@ -35,6 +24,17 @@
   }
   to {
     transform: translateY(0);
+    filter: blur(0);
+  }
+}
+
+@keyframes zoomInBlurX {
+  from {
+    transform: scale(3);
+    filter: blur(15px);
+  }
+  to {
+    transform: scale(1);
     filter: blur(0);
   }
 }
@@ -82,12 +82,13 @@
   pointer-events: none;
 }
 
-.listen-text.animate-text.visible {
-  animation: zoomInBlur 1.2s ease-out both;
-}
-
 .listen-text .x-letter {
   color: #F2C800;
+  display: inline-block;
+}
+
+.listen-text.animate-text.visible .x-letter {
+  animation: zoomInBlurX 1.2s ease-out both;
 }
 
 /* Navigation Menu for Listen Page - Centered */
