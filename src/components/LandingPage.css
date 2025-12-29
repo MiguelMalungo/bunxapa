@@ -189,12 +189,16 @@
 /* Section 3: Tour Dates */
 .tour-dates {
   position: absolute;
-  top: 765px;
-  right: 130px;
-  padding: 25px 30px;
+  top: 795px;
+  right: 75px;
+  padding: 1px 10px;
   border-radius: 25px;
   z-index: 10;
   min-width: 200px;
+  width: 90%;
+  max-width: 352px;
+  overflow: visible;
+  transition: all 0.3s ease;
 }
 
 .tour-dates.animate-tour.visible {
@@ -203,16 +207,18 @@
 
 .tour-dates-title {
   color: black;
-  font-size: 32px;
+  font-size: 26px;
   font-weight: 700;
   letter-spacing: 2px;
-  margin-bottom: 20px;
+  margin-bottom: 12px;
   text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
 }
 
 .tour-date-item {
   color: black;
-  margin-bottom: 16px;
+  margin-bottom: 8px;
+  transition: all 0.3s ease;
+  cursor: pointer;
 }
 
 .animate-tour.visible .animate-date-1 { animation: fadeSlideBlur 0.5s ease-out 0.2s both; }
@@ -231,10 +237,11 @@
 }
 
 .date {
-  font-size: 20px;
+  font-size: 16px;
   font-weight: 700;
-  margin-bottom: 5px;
+  margin-bottom: 1px;
   text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+  transition: all 0.3s ease;
 }
 
 .venue {
@@ -242,13 +249,24 @@
   font-weight: 500;
   opacity: 0.9;
   text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+  transition: all 0.3s ease;
+}
+
+.tour-date-item:hover .date {
+  color: black;
+  font-size: 22px;
+}
+
+.tour-date-item:hover .venue {
+  color: black;
+  font-size: 20px;
 }
 
 /* Section 4: Music Player / DJ Mixer */
 .music-player {
   position: absolute;
   bottom: 30px;
-  right: 45px;
+  right: 65px;
   left: auto;
   transform: none;
   z-index: 10;

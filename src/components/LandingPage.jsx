@@ -175,14 +175,6 @@ const LandingPage = () => {
             <div className="date">MAR 22</div>
             <div className="venue">MEXICO CITY</div>
           </div>
-          <div className="tour-date-item animate-date-9">
-            <div className="date">APR 05</div>
-            <div className="venue">NEW YORK</div>
-          </div>
-          <div className="tour-date-item animate-date-10">
-            <div className="date">APR 20</div>
-            <div className="venue">PORTO</div>
-          </div>
         </div>
 
         {/* Section 4: DJ Mixer - Bottom */}
