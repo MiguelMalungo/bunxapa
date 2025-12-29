@@ -111,7 +111,7 @@ const LandingPage = () => {
         {/* Section 1: Navigation Menu - Top */}
         <nav className="nav-menu animate-nav" ref={navRef}>
           <a href="#home" className="nav-link active">HOME</a>
-          <a href="#dates" className="nav-link">DATES</a>
+          <Link to="/tour" className="nav-link">DATES</Link>
           <Link to="/listen" className="nav-link">LISTEN</Link>
           <a href="#shop" className="nav-link">SHOP</a>
         </nav>

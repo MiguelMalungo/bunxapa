@@ -1,6 +1,7 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import LandingPage from './components/LandingPage'
 import ListenPage from './components/ListenPage'
+import TourPage from './components/TourPage'
 
 function App() {
   return (
@@ -8,6 +9,7 @@ function App() {
       <Routes>
         <Route path="/" element={<LandingPage />} />
         <Route path="/listen" element={<ListenPage />} />
+        <Route path="/tour" element={<TourPage />} />
       </Routes>
     </Router>
   )

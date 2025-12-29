@@ -86,7 +86,7 @@ const ListenPage = () => {
       {/* Navigation Menu */}
       <nav className="nav-menu animate-nav" ref={navRef}>
         <Link to="/" className="nav-link">HOME</Link>
-        <a href="#dates" className="nav-link">DATES</a>
+        <Link to="/tour" className="nav-link">DATES</Link>
         <Link to="/listen" className="nav-link active">LISTEN</Link>
         <a href="#shop" className="nav-link">SHOP</a>
       </nav>

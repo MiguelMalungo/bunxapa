@@ -23,7 +23,8 @@
       "Bash(ffmpeg:*)",
       "Bash(lsof:*)",
       "Bash(git checkout:*)",
-      "Bash(cwebp:*)"
+      "Bash(cwebp:*)",
+      "Bash(open http://localhost:5173/bunxapa/tour)"
     ],
     "deny": [],
     "ask": []
