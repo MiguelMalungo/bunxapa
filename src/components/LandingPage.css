@@ -29,45 +29,18 @@
   display: block;
 }
 
-/* Background clip-path animation - column by column */
-@keyframes clipColumns {
-  0% {
-    clip-path: inset(0 100% 0 0);
+/* Background blur fade-in animation */
+@keyframes blurFadeIn {
+  from {
+    filter: blur(30px);
   }
-  10% {
-    clip-path: inset(0 90% 0 0);
-  }
-  20% {
-    clip-path: inset(0 80% 0 0);
-  }
-  30% {
-    clip-path: inset(0 70% 0 0);
-  }
-  40% {
-    clip-path: inset(0 60% 0 0);
-  }
-  50% {
-    clip-path: inset(0 50% 0 0);
-  }
-  60% {
-    clip-path: inset(0 40% 0 0);
-  }
-  70% {
-    clip-path: inset(0 30% 0 0);
-  }
-  80% {
-    clip-path: inset(0 20% 0 0);
-  }
-  90% {
-    clip-path: inset(0 10% 0 0);
-  }
-  100% {
-    clip-path: inset(0 0% 0 0);
+  to {
+    filter: blur(0);
   }
 }
 
 .background-image.visible img.animate-bg {
-  animation: clipColumns 2s ease-out both;
+  animation: blurFadeIn 1.5s ease-out both;
 }
 
 /* Glassmorphism Effect */
