@@ -22,7 +22,8 @@
       "Bash(ls:*)",
       "Bash(ffmpeg:*)",
       "Bash(lsof:*)",
-      "Bash(git checkout:*)"
+      "Bash(git checkout:*)",
+      "Bash(cwebp:*)"
     ],
     "deny": [],
     "ask": []

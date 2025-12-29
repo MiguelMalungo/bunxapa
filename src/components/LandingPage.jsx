@@ -106,7 +106,7 @@ const LandingPage = () => {
     <div className="landing-page">
       {/* Background Image Container */}
       <div className="background-image" ref={bgRef}>
-        <img src={`${import.meta.env.BASE_URL}artwork.png`} alt="BUNXAPA Artwork" className="animate-bg" />
+        <img src={`${import.meta.env.BASE_URL}artwork.webp`} alt="BUNXAPA Artwork" className="animate-bg" />
 
         {/* Section 1: Navigation Menu - Top */}
         <nav className="nav-menu animate-nav" ref={navRef}>
