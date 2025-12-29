@@ -18,7 +18,11 @@
       "Bash(open http://localhost:5173/bunxapa/)",
       "Bash(ffprobe:*)",
       "Bash(cat:*)",
-      "Bash(~/.bun/bin/bun run:*)"
+      "Bash(~/.bun/bin/bun run:*)",
+      "Bash(ls:*)",
+      "Bash(ffmpeg:*)",
+      "Bash(lsof:*)",
+      "Bash(git checkout:*)"
     ],
     "deny": [],
     "ask": []

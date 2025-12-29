@@ -1,10 +1,17 @@
-import React, { useRef, useEffect } from 'react';
+import React, { useRef, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import './LandingPage.css';
 import DJMixer from './DJMixer';
 
 const LandingPage = () => {
   const bottomVideoRef = useRef(null);
+  const bgRef = useRef(null);
+  const navRef = useRef(null);
+  const socialRef = useRef(null);
+  const tourRef = useRef(null);
+  const actionsRef = useRef(null);
+  const mixerRef = useRef(null);
+  const footerRef = useRef(null);
 
   const tracks = [
     { title: 'Echoes Extend', artist: 'BUNXAPA', file: `${import.meta.env.BASE_URL}EchoesExtend.mp3` },
@@ -20,6 +27,35 @@ const LandingPage = () => {
   ];
 
   useEffect(() => {
+    // Set up Intersection Observer for scroll animations
+    const observerOptions = {
+      threshold: 0.1,
+      rootMargin: '0px 0px -10% 0px'
+    };
+
+    const observerCallback = (entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    };
+
+    const observer = new IntersectionObserver(observerCallback, observerOptions);
+
+    // Observe all elements
+    const elementsToObserve = [
+      bgRef.current,
+      navRef.current,
+      socialRef.current,
+      tourRef.current,
+      actionsRef.current,
+      mixerRef.current,
+      footerRef.current
+    ].filter(Boolean);
+
+    elementsToObserve.forEach(el => observer.observe(el));
+
     const video = bottomVideoRef.current;
     const container = video?.parentElement;
 
@@ -55,20 +91,25 @@ const LandingPage = () => {
       }
 
       return () => {
+        observer.disconnect();
         video.removeEventListener('loadedmetadata', handleLoadedMetadata);
         window.removeEventListener('resize', handleResize);
       };
     }
+
+    return () => {
+      observer.disconnect();
+    };
   }, []);
 
   return (
     <div className="landing-page">
       {/* Background Image Container */}
-      <div className="background-image">
-        <img src={`${import.meta.env.BASE_URL}artwork.png`} alt="BUNXAPA Artwork" />
+      <div className="background-image" ref={bgRef}>
+        <img src={`${import.meta.env.BASE_URL}artwork.png`} alt="BUNXAPA Artwork" className="animate-bg" />
 
         {/* Section 1: Navigation Menu - Top */}
-        <nav className="nav-menu">
+        <nav className="nav-menu animate-nav" ref={navRef}>
           <a href="#home" className="nav-link active">HOME</a>
           <a href="#dates" className="nav-link">DATES</a>
           <Link to="/listen" className="nav-link">LISTEN</Link>
@@ -76,23 +117,23 @@ const LandingPage = () => {
         </nav>
 
         {/* Section 5: Action Icons - Left Vertical */}
-        <div className="action-icons">
-          <button className="action-icon">
+        <div className="action-icons animate-actions" ref={actionsRef}>
+          <button className="action-icon animate-icon-1">
             <svg viewBox="0 0 24 24" fill="currentColor">
               <path d="M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12.9-1.63h7.45c.75 0 1.41-.41 1.75-1.03l3.58-6.49c.08-.14.12-.31.12-.48 0-.55-.45-1-1-1H5.21l-.94-2H1zm16 16c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z" />
             </svg>
           </button>
-          <button className="action-icon">
+          <button className="action-icon animate-icon-2">
             <svg viewBox="0 0 24 24" fill="currentColor">
               <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
             </svg>
           </button>
-          <button className="action-icon">
+          <button className="action-icon animate-icon-3">
             <svg viewBox="0 0 24 24" fill="currentColor">
               <path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z" />
             </svg>
           </button>
-          <button className="action-icon">
+          <button className="action-icon animate-icon-4">
             <svg viewBox="0 0 24 24" fill="currentColor">
               <path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92 1.61 0 2.92-1.31 2.92-2.92s-1.31-2.92-2.92-2.92z" />
             </svg>
@@ -100,57 +141,57 @@ const LandingPage = () => {
         </div>
 
         {/* Section 3: Tour Dates - Top Right */}
-        <div className="tour-dates">
+        <div className="tour-dates animate-tour" ref={tourRef}>
           <h3 className="tour-dates-title">TOUR DATES</h3>
-          <div className="tour-date-item">
+          <div className="tour-date-item animate-date-1">
             <div className="date">DEC 15</div>
             <div className="venue">ISTANBUL</div>
           </div>
-          <div className="tour-date-item">
+          <div className="tour-date-item animate-date-2">
             <div className="date">DEC 22</div>
             <div className="venue">BALI</div>
           </div>
-          <div className="tour-date-item">
+          <div className="tour-date-item animate-date-3">
             <div className="date">JAN 05</div>
             <div className="venue">SINGAPORE</div>
           </div>
-          <div className="tour-date-item">
+          <div className="tour-date-item animate-date-4">
             <div className="date">JAN 18</div>
             <div className="venue">BANGKOK</div>
           </div>
-          <div className="tour-date-item">
+          <div className="tour-date-item animate-date-5">
             <div className="date">FEB 02</div>
             <div className="venue">PARIS</div>
           </div>
-          <div className="tour-date-item">
+          <div className="tour-date-item animate-date-6">
             <div className="date">FEB 14</div>
             <div className="venue">AMSTERDAM</div>
           </div>
-          <div className="tour-date-item">
+          <div className="tour-date-item animate-date-7">
             <div className="date">MAR 08</div>
             <div className="venue">TULUM</div>
           </div>
-          <div className="tour-date-item">
+          <div className="tour-date-item animate-date-8">
             <div className="date">MAR 22</div>
             <div className="venue">MEXICO CITY</div>
           </div>
-          <div className="tour-date-item">
+          <div className="tour-date-item animate-date-9">
             <div className="date">APR 05</div>
             <div className="venue">NEW YORK</div>
           </div>
-          <div className="tour-date-item">
+          <div className="tour-date-item animate-date-10">
             <div className="date">APR 20</div>
             <div className="venue">PORTO</div>
           </div>
         </div>
 
         {/* Section 4: DJ Mixer - Bottom */}
-        <div className="music-player dj-mixer-container">
+        <div className="music-player dj-mixer-container animate-mixer" ref={mixerRef}>
           <DJMixer tracks={tracks} />
         </div>
 
         {/* Desktop Footer Credit */}
-        <div className="desktop-footer-credit">
+        <div className="desktop-footer-credit animate-footer" ref={footerRef}>
           Created by <span className="footer-author">DIGISOL</span>
           <img
             src={`${import.meta.env.BASE_URL}logodigi.png`}
@@ -160,7 +201,7 @@ const LandingPage = () => {
         </div>
 
         {/* Section 2: Social Media Icons - Right Fixed */}
-        <div className="social-icons">
+        <div className="social-icons animate-social" ref={socialRef}>
           <a href="#instagram" className="social-icon">
             <svg viewBox="0 0 24 24" fill="currentColor">
               <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z" />
