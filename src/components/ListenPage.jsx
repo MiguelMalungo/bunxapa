@@ -5,6 +5,10 @@ import DJMixer from './DJMixer';
 
 const ListenPage = () => {
   const videoRef = useRef(null);
+  const textRef = useRef(null);
+  const navRef = useRef(null);
+  const mixerRef = useRef(null);
+  const footerRef = useRef(null);
 
   const tracks = [
     { title: 'Echoes Extend', artist: 'BUNXAPA', file: `${import.meta.env.BASE_URL}EchoesExtend.mp3` },
@@ -20,10 +24,41 @@ const ListenPage = () => {
   ];
 
   useEffect(() => {
+    // Set up Intersection Observer for scroll animations
+    const observerOptions = {
+      threshold: 0.1,
+      rootMargin: '0px 0px -10% 0px'
+    };
+
+    const observerCallback = (entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    };
+
+    const observer = new IntersectionObserver(observerCallback, observerOptions);
+
+    // Observe all elements
+    const elementsToObserve = [
+      videoRef.current,
+      textRef.current,
+      navRef.current,
+      mixerRef.current,
+      footerRef.current
+    ].filter(Boolean);
+
+    elementsToObserve.forEach(el => observer.observe(el));
+
     const video = videoRef.current;
     if (video) {
       video.playbackRate = 0.3;
     }
+
+    return () => {
+      observer.disconnect();
+    };
   }, []);
 
   return (
@@ -31,7 +66,7 @@ const ListenPage = () => {
       {/* Background Video */}
       <video
         ref={videoRef}
-        className="listen-video"
+        className="listen-video animate-video"
         autoPlay
         loop
         muted
@@ -44,12 +79,12 @@ const ListenPage = () => {
       </video>
 
       {/* BUNXAPA Text Overlay */}
-      <h1 className="listen-text">
+      <h1 className="listen-text animate-text" ref={textRef}>
         BUN<span className="x-letter">X</span>APA
       </h1>
 
       {/* Navigation Menu */}
-      <nav className="nav-menu">
+      <nav className="nav-menu animate-nav" ref={navRef}>
         <Link to="/" className="nav-link">HOME</Link>
         <a href="#dates" className="nav-link">DATES</a>
         <Link to="/listen" className="nav-link active">LISTEN</Link>
@@ -57,12 +92,12 @@ const ListenPage = () => {
       </nav>
 
       {/* DJ Mixer - Centered at bottom right over footer */}
-      <div className="listen-mixer-container">
+      <div className="listen-mixer-container animate-mixer" ref={mixerRef}>
         <DJMixer tracks={tracks} />
       </div>
 
       {/* Footer */}
-      <footer className="listen-footer">
+      <footer className="listen-footer animate-footer" ref={footerRef}>
         <div className="footer-content">
           <div className="footer-right">
             Created by <span className="footer-author">DIGISOL</span>
