@@ -24,7 +24,8 @@
       "Bash(lsof:*)",
       "Bash(git checkout:*)",
       "Bash(cwebp:*)",
-      "Bash(open http://localhost:5173/bunxapa/tour)"
+      "Bash(open http://localhost:5173/bunxapa/tour)",
+      "Bash(find:*)"
     ],
     "deny": [],
     "ask": []

@@ -213,6 +213,16 @@
 .tour-date-item {
   color: black;
   margin-bottom: 16px;
+  padding: 10px 15px;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.tour-date-item:hover {
+  color: white;
+  background: rgba(0, 0, 0, 0.8);
+  transform: translateX(-5px);
 }
 
 .animate-tour.visible .animate-date-1 { animation: fadeSlideBlur 0.5s ease-out 0.2s both; }
@@ -235,6 +245,12 @@
   font-weight: 700;
   margin-bottom: 5px;
   text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+  transition: all 0.3s ease;
+}
+
+.tour-date-item:hover .date {
+  color: white;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.8);
 }
 
 .venue {
@@ -242,6 +258,12 @@
   font-weight: 500;
   opacity: 0.9;
   text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+  transition: all 0.3s ease;
+}
+
+.tour-date-item:hover .venue {
+  color: white;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.8);
 }
 
 /* Section 4: Music Player / DJ Mixer */
