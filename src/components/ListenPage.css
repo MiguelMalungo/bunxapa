@@ -30,8 +30,8 @@
 
 @keyframes zoomInBlurX {
   from {
-    transform: scale(3);
-    filter: blur(15px);
+    transform: scale(10);
+    filter: blur(25px);
   }
   to {
     transform: scale(1);
