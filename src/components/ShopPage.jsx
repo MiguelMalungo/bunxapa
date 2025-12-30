@@ -10,10 +10,9 @@ const ShopPage = () => {
   const [selectedItem, setSelectedItem] = React.useState(null);
 
   const shopItems = [
-    { id: 1, name: 'Item 1', price: '$25.00', image: '' },
-    { id: 2, name: 'Item 2', price: '$30.00', image: '' },
-    { id: 3, name: 'Item 3', price: '$20.00', image: '' },
-    { id: 4, name: 'Item 4', price: '$35.00', image: '' },
+    { id: 1, name: 'BUNXAPA T-Shirt 1', price: '$25.00', image: `${import.meta.env.BASE_URL}tshirt1.webp` },
+    { id: 2, name: 'BUNXAPA T-Shirt 2', price: '$25.00', image: `${import.meta.env.BASE_URL}tshirt2.webp` },
+    { id: 4, name: 'BUNXAPA T-Shirt 4', price: '$25.00', image: `${import.meta.env.BASE_URL}tshirt4.webp` },
   ];
 
   const albumItems = [
